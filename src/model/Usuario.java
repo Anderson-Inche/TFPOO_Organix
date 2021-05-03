@@ -16,6 +16,9 @@ public class Usuario {
     private String password;
     private String nivel_permiso;
 
+    public Usuario(){
+        
+    }
     public Usuario(int idUsuario, String nombre, String apellido, String idDocumento, String direccion, String email, String password, String nivel_permiso) {
         this.idUsuario = idUsuario;
         this.nombre = nombre;

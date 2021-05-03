@@ -7,8 +7,25 @@ package model;
 import java.sql.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import javax.swing.JOptionPane;
+
 public class UsuarioDAO extends Conexion{
+    public boolean verificarUser(String DNI){
+        boolean state = true;
+        try {
+             Connection cn = Conexion.conectar();
+                PreparedStatement pst = cn.prepareStatement(
+                        "select dni from usuario where dni = '" + DNI + "'");
+                ResultSet rs = pst.executeQuery();
+                if (rs.next()){
+                    return false;
+                }
+            cn.close();   
+        } catch (SQLException e) {
+            System.err.println("Error al validar usuario " + e);
+        }
+        return state;
+    }
+    
     public boolean addUser( Usuario user){
         try {
             Connection cn2 = Conexion.conectar();
