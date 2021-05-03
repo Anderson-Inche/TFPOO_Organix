@@ -26,7 +26,6 @@ public class ControlUsuario implements ActionListener {
     private RegistrarUsuario panel;
     private LoginFrame login;
     private JPanel panel2;
-
     public ControlUsuario(RegistrarUsuario panel, JPanel panel2) {
         this.panel = panel;
         this.panel.botonRegistrar.addActionListener(this);
@@ -45,7 +44,6 @@ public class ControlUsuario implements ActionListener {
             direccion = panel.txtDireccion.getText().trim();
             email = panel.txtCorreo.getText().trim();
             password = panel.txtContraseña.getText().trim();
-
             Usuario user = new Usuario(WIDTH, nombre, apellido, documento, direccion, email, password, "Cliente");
 
             int validacion = 0;
@@ -116,6 +114,8 @@ public class ControlUsuario implements ActionListener {
                             System.err.println("Error al validar usuario " + e);
                             JOptionPane.showMessageDialog(null, "ERROR AL COMPARAR USUARIO, Contactar al Administrador");
                         }
+
+                          
                     } else {
                         JOptionPane.showMessageDialog(null, "Debes llenar todos los campos");
                     }

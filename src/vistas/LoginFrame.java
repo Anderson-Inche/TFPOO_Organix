@@ -275,6 +275,7 @@ public class LoginFrame extends javax.swing.JFrame {
         LoginPanel.setVisible(false);
         registerUser.setVisible(true);
         jPanel3.add(registerUser);
+        
         ControlUsuario control = new ControlUsuario(registerUser, LoginPanel);
     }//GEN-LAST:event_jButton2ActionPerformed
 
