@@ -9,16 +9,10 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import static java.awt.image.ImageObserver.WIDTH;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import model.Conexion;
 import model.Usuario;
 import model.UsuarioDAO;
-import vistas.LoginFrame;
 import vistas.RegistrarUsuario;
 
 public class ControlUsuario implements ActionListener {
@@ -33,6 +27,7 @@ public class ControlUsuario implements ActionListener {
         this.panelRegistrarUser.botonRegistrar.addActionListener(this);
     }
 
+    @Override
     public void actionPerformed(ActionEvent event) {
         String nombre, apellido, documento, direccion, email, password;
         nombre = panelRegistrarUser.txtNombre.getText().trim();
