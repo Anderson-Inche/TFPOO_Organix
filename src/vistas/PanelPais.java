@@ -6,6 +6,7 @@
 package vistas;
 
 import controlador.ControlPais;
+import java.awt.Color;
 import javax.swing.table.DefaultTableModel;
 import java.sql.*;
 import javax.swing.JOptionPane;
@@ -57,8 +58,8 @@ public class PanelPais extends javax.swing.JPanel {
     private void initComponents() {
 
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        buttonBuscar = new javax.swing.JButton();
+        txtBuscaPais = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTablePaises = new javax.swing.JTable();
@@ -76,15 +77,20 @@ public class PanelPais extends javax.swing.JPanel {
             }
         });
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons/search-icon.png"))); // NOI18N
-        jButton2.setBorderPainted(false);
-        jButton2.setContentAreaFilled(false);
-        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jButton2.setFocusPainted(false);
+        buttonBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons/search-icon.png"))); // NOI18N
+        buttonBuscar.setBorderPainted(false);
+        buttonBuscar.setContentAreaFilled(false);
+        buttonBuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        buttonBuscar.setFocusPainted(false);
+        buttonBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonBuscarActionPerformed(evt);
+            }
+        });
 
-        jTextField1.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
-        jTextField1.setBorder(null);
-        jTextField1.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        txtBuscaPais.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        txtBuscaPais.setBorder(null);
+        txtBuscaPais.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
 
         jTablePaises.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -115,10 +121,10 @@ public class PanelPais extends javax.swing.JPanel {
                 .addGap(58, 58, 58)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 727, Short.MAX_VALUE)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(buttonBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
+                    .addComponent(txtBuscaPais, javax.swing.GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
                     .addComponent(jSeparator1))
                 .addGap(90, 90, 90))
             .addGroup(layout.createSequentialGroup()
@@ -131,9 +137,9 @@ public class PanelPais extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(51, 51, 51)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(buttonBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtBuscaPais, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(65, 65, 65)
@@ -144,18 +150,30 @@ public class PanelPais extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        RegistrarPais registrarPais = new RegistrarPais();
+       RegistrarPais registrarPais = new RegistrarPais();
        registrarPais.setVisible(true);
-        ControlPais control = new ControlPais(registrarPais);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void buttonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBuscarActionPerformed
+        // TODO add your handling code here:
+//        int validacion = 0;
+//            int codPais = Integer.parseInt( txtBuscaPais.getText() );
+//            if (txtBuscaPais.equals("")){
+//                txtBuscaPais.setBackground(Color.red);
+//                validacion++;
+//            }
+//            if (validacion==0){
+//                
+//            }
+    }//GEN-LAST:event_buttonBuscarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public javax.swing.JButton buttonBuscar;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable jTablePaises;
-    private javax.swing.JTextField jTextField1;
+    public javax.swing.JTextField txtBuscaPais;
     // End of variables declaration//GEN-END:variables
 }

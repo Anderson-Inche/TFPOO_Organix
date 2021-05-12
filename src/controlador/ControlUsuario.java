@@ -20,6 +20,7 @@ public class ControlUsuario implements ActionListener {
     UsuarioDAO modeloUsuario = new UsuarioDAO();
     RegistrarUsuario panelRegistrarUser = new RegistrarUsuario();
     JPanel loginpanel = new JPanel();
+    
 
     public ControlUsuario(RegistrarUsuario panelRegistrarUser, JPanel loginpanel) {
         this.panelRegistrarUser = panelRegistrarUser;
@@ -36,8 +37,11 @@ public class ControlUsuario implements ActionListener {
         direccion = panelRegistrarUser.txtDireccion.getText().trim();
         email = panelRegistrarUser.txtCorreo.getText().trim();
         password = panelRegistrarUser.txtContraseña.getText().trim();
+        
         Usuario user = new Usuario(WIDTH, nombre, apellido, documento, direccion, email, password, "Cliente");
+        
         int validacion = 0;
+        
         if (user.getEmail().equals("")) {
             panelRegistrarUser.txtCorreo.setBackground(Color.red);
             validacion++;
@@ -64,14 +68,16 @@ public class ControlUsuario implements ActionListener {
         }
         if (validacion == 0) {
             if (modeloUsuario.verificarUser(user.getIdDocumento())) {
-                if (modeloUsuario.addUser(user)){
+                if (modeloUsuario.insertarUser(user)){
                     panelRegistrarUser.txtCorreo.setBackground(Color.green);
                     panelRegistrarUser.txtNombre.setBackground(Color.green);
                     panelRegistrarUser.txtApellido.setBackground(Color.green);
                     panelRegistrarUser.txtDocumento.setBackground(Color.green);
                     panelRegistrarUser.txtDireccion.setBackground(Color.green);
                     panelRegistrarUser.txtContraseña.setBackground(Color.green);
+                    
                     JOptionPane.showMessageDialog(null, "Registro exitoso.");
+                    
                     panelRegistrarUser.setVisible(false);
                     loginpanel.setVisible(true);
                 }  

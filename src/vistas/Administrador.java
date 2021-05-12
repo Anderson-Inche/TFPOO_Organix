@@ -5,6 +5,7 @@
  */
 package vistas;
 
+import controlador.ControlPais;
 import javax.swing.WindowConstants;
 
 /**
@@ -203,6 +204,7 @@ public class Administrador extends javax.swing.JFrame {
         lbTitulo.setText("Países");
         PanelPais panelpais= new PanelPais();
         PanelMain.add(panelpais);
+        ControlPais control = new ControlPais(panelpais);
         
     }//GEN-LAST:event_ButtonPaisActionPerformed
 

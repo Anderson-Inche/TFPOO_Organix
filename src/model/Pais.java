@@ -5,14 +5,10 @@
  */
 package model;
 
-/**
- *
- * @author ANDERSON
- */
 public class Pais {
     private int idPais;
     private String nombrePais;
-
+    
     public Pais(int idPais, String nombrePais) {
         this.idPais = idPais;
         this.nombrePais = nombrePais;
