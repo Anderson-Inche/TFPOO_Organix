@@ -21,6 +21,7 @@ public class LoginFrame extends javax.swing.JFrame {
     String pass = "";
 
     public LoginFrame() {
+        
         initComponents();
         //no modifica el tamaño de la ventana
         setResizable(false);
@@ -129,11 +130,13 @@ public class LoginFrame extends javax.swing.JFrame {
         txtUser.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
         txtUser.setForeground(new java.awt.Color(255, 255, 255));
         txtUser.setBorder(null);
+        txtUser.setCaretColor(new java.awt.Color(255, 255, 255));
 
         txtPassword.setBackground(new java.awt.Color(33, 45, 62));
         txtPassword.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
         txtPassword.setForeground(new java.awt.Color(255, 255, 255));
         txtPassword.setBorder(null);
+        txtPassword.setCaretColor(new java.awt.Color(255, 255, 255));
 
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons/user.png"))); // NOI18N
@@ -243,16 +246,20 @@ public class LoginFrame extends javax.swing.JFrame {
             try {
                 Connection cn = Conexion.conectar();
                 PreparedStatement pst = cn.prepareStatement(
-                        "select nivel_permiso from usuario where nombre = '" + user
+                        "select permiso from usuario where nameUsuario = '" + user
                         + "' and password = '" + pass + "'");
 
                 ResultSet result = pst.executeQuery();
                 if (result.next()) {
-                    String tipo_nivel = result.getString("nivel_permiso");
+                    String tipo_nivel = result.getString("permiso");
 
                     if (tipo_nivel.equals("Administrador")) {
                         dispose();
                         new Administrador().setVisible(true);
+                    }
+                    else if (tipo_nivel.equals("Cliente")) {
+                        dispose();
+                        new Cliente().setVisible(true);
                     }
                 } else {
                     JOptionPane.showMessageDialog(null, "Datos de acceso incorrectos. ");
@@ -272,8 +279,10 @@ public class LoginFrame extends javax.swing.JFrame {
 
         // TODO add your handling code here:
         RegistrarUsuario registerUser = new RegistrarUsuario();
+        
         LoginPanel.setVisible(false);
         registerUser.setVisible(true);
+        
         jPanel3.add(registerUser);
         
         ControlUsuario control = new ControlUsuario(registerUser, LoginPanel);
@@ -283,29 +292,6 @@ public class LoginFrame extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(LoginFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(LoginFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(LoginFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(LoginFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {

@@ -16,7 +16,7 @@ public class UsuarioDAO extends Conexion {
         try {
             Connection cn = Conexion.conectar();
             PreparedStatement pst = cn.prepareStatement(
-                    "select dni from usuario where dni = '" + DNI + "'");
+                    "select dni from usuario where idDocumento = '" + DNI + "'");
             ResultSet rs = pst.executeQuery();
             if (rs.next()) {
                 return false;
@@ -56,8 +56,8 @@ public class UsuarioDAO extends Conexion {
         try {
             Connection cn2 = Conexion.conectar();
             PreparedStatement pst2 = cn2.prepareStatement(
-                    "UPDATE usuario SET  nombre=? , apellido = ?, dni = ?, "
-                    + "direccion=?, email=?, password=?, nivel_permiso=? WHERE id_usuario=?");
+                    "UPDATE usuario SET  nameUsuario=? , nameApellido = ?, iddocumento = ?, "
+                    + "direccion=?, email=?, password=?, permiso=? WHERE idUsuario=?");
 
             pst2.setString(1, user.getNombre());
             pst2.setString(2, user.getApellido());
@@ -65,7 +65,7 @@ public class UsuarioDAO extends Conexion {
             pst2.setString(4, user.getDireccion());
             pst2.setString(5, user.getEmail());
             pst2.setString(6, user.getPassword());
-            pst2.setString(7, "Cliente");
+            pst2.setString(7, user.getNivel_permiso());
             pst2.setInt(8, user.getIdUsuario());
 
             pst2.executeUpdate();
@@ -82,7 +82,7 @@ public class UsuarioDAO extends Conexion {
         try {
             Connection cn2 = Conexion.conectar();
             PreparedStatement pst2 = cn2.prepareStatement(
-                    "DELETE FROM usuario WHERE id_usuario = ?");
+                    "DELETE FROM usuario WHERE idUsuario = ?");
             pst2.setInt(1, user.getIdUsuario());
 
             pst2.executeUpdate();
@@ -100,17 +100,17 @@ public class UsuarioDAO extends Conexion {
         try {
             Connection cn = Conexion.conectar();
             PreparedStatement pst = cn.prepareStatement(
-                    "select * from usuario where id_usuario = '" + user.getIdUsuario() + "'");
+                    "select * from usuario where idUsuario = '" + user.getIdUsuario() + "'");
             ResultSet rs = pst.executeQuery();
             if (rs.next()) {
-                user.setIdUsuario(Integer.parseInt(rs.getString("id_usuario")));
-                user.setNombre(rs.getString("nombre"));
-                user.setNombre(rs.getString("apellido"));
-                user.setNombre(rs.getString("dni"));
-                user.setNombre(rs.getString("direccion"));
-                user.setNombre(rs.getString("email"));
+                user.setIdUsuario(Integer.parseInt(rs.getString("idUsuario")));
+                user.setNombre(rs.getString("nameUsuario"));
+                user.setApellido(rs.getString("nameApellido"));
+                user.setIdDocumento(rs.getString("idDocumento"));
+                user.setDireccion(rs.getString("direccion"));
+                user.setEmail(rs.getString("email"));
                 user.setPassword(rs.getString("password"));
-                user.setPassword(rs.getString("nivel_permiso"));
+                user.setNivel_permiso(rs.getString("permiso"));
                 return true;
             }
             cn.close();
@@ -119,6 +119,25 @@ public class UsuarioDAO extends Conexion {
             System.err.println("Error al validar usuario " + e);
             return false;
         }
-
     }
+    public String idIncrementable(){
+        try {
+           Connection cn = Conexion.conectar();
+              PreparedStatement pst = cn.prepareStatement(
+                     "SELECT AUTO_INCREMENT as id FROM  INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'bd_organix' AND TABLE_NAME = 'usuario';" );
+              ResultSet rs = pst.executeQuery();
+              if (rs.next()){
+                  int id_incrementado = rs.getInt(1);
+                  System.out.println("ID:" + String.valueOf(id_incrementado));
+                  return String.valueOf(id_incrementado);
+
+              }
+              cn.close(); 
+              return "";
+          } catch (SQLException e) {
+              System.err.println("Error al validar usuario " + e);
+              return "";
+          }
+    }
+    
 }

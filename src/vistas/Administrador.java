@@ -5,7 +5,7 @@
  */
 package vistas;
 
-import controlador.ControlPais;
+
 import javax.swing.WindowConstants;
 
 /**
@@ -66,6 +66,7 @@ public class Administrador extends javax.swing.JFrame {
         jLabel1.setText("ADMINISTRADOR");
 
         ButtonUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons/Boton-bar-Usuarios.png"))); // NOI18N
+        ButtonUsuario.setBorder(null);
         ButtonUsuario.setContentAreaFilled(false);
         ButtonUsuario.setFocusPainted(false);
         ButtonUsuario.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons/BotonPress-bar-usuarios.png"))); // NOI18N
@@ -76,6 +77,7 @@ public class Administrador extends javax.swing.JFrame {
         });
 
         ButtonProductos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons/Boton-bar-Productos.png"))); // NOI18N
+        ButtonProductos.setBorder(null);
         ButtonProductos.setContentAreaFilled(false);
         ButtonProductos.setFocusPainted(false);
         ButtonProductos.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons/BotonPress-bar-productos.png"))); // NOI18N
@@ -86,6 +88,7 @@ public class Administrador extends javax.swing.JFrame {
         });
 
         ButtonReserva.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons/Boton-bar-reservas.png"))); // NOI18N
+        ButtonReserva.setBorder(null);
         ButtonReserva.setContentAreaFilled(false);
         ButtonReserva.setFocusPainted(false);
         ButtonReserva.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons/BotonPress-bar-reservas.png"))); // NOI18N
@@ -96,6 +99,7 @@ public class Administrador extends javax.swing.JFrame {
         });
 
         ButtonFactura.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons/Boton-bar-facturas.png"))); // NOI18N
+        ButtonFactura.setBorder(null);
         ButtonFactura.setContentAreaFilled(false);
         ButtonFactura.setFocusPainted(false);
         ButtonFactura.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons/BotonPress-bar-facturas.png"))); // NOI18N
@@ -117,6 +121,7 @@ public class Administrador extends javax.swing.JFrame {
         });
 
         ButtonCiudad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons/Boton-bar-ciudades.png"))); // NOI18N
+        ButtonCiudad.setBorder(null);
         ButtonCiudad.setContentAreaFilled(false);
         ButtonCiudad.setFocusPainted(false);
         ButtonCiudad.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons/BotonPress-bar-ciudades.png"))); // NOI18N
@@ -138,8 +143,8 @@ public class Administrador extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(ButtonProductos, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                         .addComponent(ButtonUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addComponent(ButtonPais, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(ButtonCiudad, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(ButtonCiudad, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(ButtonPais, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(40, 40, 40)
@@ -200,37 +205,51 @@ public class Administrador extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ButtonPaisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonPaisActionPerformed
-       
+        PanelMain.removeAll();
         lbTitulo.setText("Países");
         PanelPais panelpais= new PanelPais();
         PanelMain.add(panelpais);
-        ControlPais control = new ControlPais(panelpais);
         
     }//GEN-LAST:event_ButtonPaisActionPerformed
 
     private void ButtonCiudadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonCiudadActionPerformed
         // TODO add your handling code here:
+        PanelMain.removeAll();
         lbTitulo.setText("Ciudades");
+        PanelCiudad panelCiudad = new PanelCiudad();
+        PanelMain.add(panelCiudad);
     }//GEN-LAST:event_ButtonCiudadActionPerformed
 
     private void ButtonUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonUsuarioActionPerformed
         // TODO add your handling code here:
+        PanelMain.removeAll();
         lbTitulo.setText("Usuarios");
+        PanelUsuario panelUsuario= new PanelUsuario();
+        PanelMain.add(panelUsuario);
     }//GEN-LAST:event_ButtonUsuarioActionPerformed
 
     private void ButtonProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonProductosActionPerformed
         // TODO add your handling code here:
+        PanelMain.removeAll();
         lbTitulo.setText("Productos");
+        PanelProducto panelProducto= new PanelProducto();
+        PanelMain.add(panelProducto);
     }//GEN-LAST:event_ButtonProductosActionPerformed
 
     private void ButtonReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonReservaActionPerformed
         // TODO add your handling code here:
+        PanelMain.removeAll();
         lbTitulo.setText("Reservas");
+        PanelReserva panelReserva= new PanelReserva();
+        PanelMain.add(panelReserva);
     }//GEN-LAST:event_ButtonReservaActionPerformed
 
     private void ButtonFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonFacturaActionPerformed
         // TODO add your handling code here:
+        PanelMain.removeAll();
         lbTitulo.setText("Facturas");
+        PanelFactura panelFactura= new PanelFactura();
+        PanelMain.add(panelFactura);
     }//GEN-LAST:event_ButtonFacturaActionPerformed
 
     /**

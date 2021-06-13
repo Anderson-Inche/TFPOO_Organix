@@ -49,8 +49,8 @@ public class ProductoDAO {
         try {
             Connection cn2 = Conexion.conectar();
             PreparedStatement pst2 = cn2.prepareStatement(
-                    "UPDATE usuario SET nombreProducto=? , diaReabastecimiento=? , "
-                    + "cantidadStock=?, cantidadReserva=?, precio=?  WHERE idProducto = ?");
+                    "UPDATE usuario SET nameProducto=? , dayReabastecimiento=? , "
+                    + "quantityStock=?, quantityReserva=?, moneyPrecio=?  WHERE idProducto = ?");
             
             pst2.setString(1, producto.getNombreProducto());
             pst2.setDate(2, (Date) producto.getDiaReabastecimiento());
@@ -73,7 +73,7 @@ public class ProductoDAO {
         try {
             Connection cn2 = Conexion.conectar();
             PreparedStatement pst2 = cn2.prepareStatement(
-                    "DELETE FROM pais WHERE idProducto = ?");
+                    "DELETE FROM producto WHERE idProducto = ?");
             pst2.setInt(1, producto.getIdProducto());
             
             pst2.execute();
@@ -94,11 +94,11 @@ public class ProductoDAO {
             ResultSet rs = pst.executeQuery();
             if (rs.next()) {
                 producto.setIdProducto(rs.getInt("idProducto"));
-                producto.setNombreProducto(rs.getString("nombreProducto"));
-                producto.setDiaReabastecimiento(rs.getDate("diaReabastecimiento"));
-                producto.setStock(rs.getInt("cantidadStock"));
-                producto.setCantidadReservada(rs.getInt("cantidadReserva"));
-                producto.setPrecio(rs.getInt("precio"));
+                producto.setNombreProducto(rs.getString("nameProducto"));
+                producto.setDiaReabastecimiento(rs.getDate("dayReabastecimiento"));
+                producto.setStock(rs.getInt("quantityStock"));
+                producto.setCantidadReservada(rs.getInt("quantityReserva"));
+                producto.setPrecio(rs.getInt("moneyPrecio"));
                 return true;
             }
             cn.close();            
@@ -106,6 +106,25 @@ public class ProductoDAO {
         } catch (SQLException e) {
             System.err.println("Error al validar usuario " + e);
             return false;
+        }
+    }
+    public String idIncrementable(){
+          try {
+             Connection cn = Conexion.conectar();
+                PreparedStatement pst = cn.prepareStatement(
+                       "SELECT AUTO_INCREMENT as id FROM  INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'bd_organix' AND TABLE_NAME = 'producto';" );
+                ResultSet rs = pst.executeQuery();
+                if (rs.next()){
+                    int id_incrementado = rs.getInt(1);
+                    System.out.println("ID:" + String.valueOf(id_incrementado));
+                    return String.valueOf(id_incrementado);
+                    
+                }
+                cn.close(); 
+                return "";
+        } catch (SQLException e) {
+            System.err.println("Error al validar usuario " + e);
+            return "";
         }
     }
 }
