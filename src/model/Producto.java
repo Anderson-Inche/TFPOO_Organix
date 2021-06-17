@@ -18,7 +18,10 @@ public class Producto {
     private int stock;
     private int cantidadReservada;
     private double precio;
-
+    
+    public Producto(){
+        
+    }
     public Producto(int idProducto, String nombreProducto, Date diaReabastecimiento, int stock, int cantidadReservada, double precio) {
         this.idProducto = idProducto;
         this.nombreProducto = nombreProducto;

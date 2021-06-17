@@ -43,15 +43,16 @@ public class ControlPais implements ActionListener {
         if (event.getSource() == RegistrarPaisfrm.ButtonRegistrar) {
             
             int id = Integer.parseInt(modeloPais.idIncrementable());
-            String nombrePais;
+            
             int validacion = 0;
             
             if (RegistrarPaisfrm.txtnombrePais.getText().equals("")) {
                 RegistrarPaisfrm.txtnombrePais.setBackground(Color.red);
                 validacion++;
             }
-            nombrePais = RegistrarPaisfrm.txtnombrePais.getText();
+            
             if (validacion == 0) {
+                String nombrePais = RegistrarPaisfrm.txtnombrePais.getText();
                 Pais pais = new Pais(id, nombrePais);
                 if (modeloPais.validarPais(pais.getIdPais(), pais.getNombrePais())) {
                     if (modeloPais.insertarPais(pais)) {

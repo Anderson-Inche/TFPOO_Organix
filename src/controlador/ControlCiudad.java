@@ -54,8 +54,10 @@ public class ControlCiudad implements ActionListener {
             nombreCiudad = registrarCiudadfrm.txtNombre.getText();
             nombrePais = registrarCiudadfrm.cbxPais.getSelectedItem().toString();
             int idCuidad = Integer.parseInt(registrarCiudadfrm.lblId.getText());
-            Pais pais = new Pais(modeloCiudad.GetIdPais(nombrePais), nombrePais);
+            
             if (validacion == 0) {
+                
+                Pais pais = new Pais(modeloCiudad.GetIdPais(nombrePais), nombrePais);
                 Ciudad ciudad = new Ciudad(idCuidad, nombreCiudad, pais);
                 if (modeloCiudad.validarCiudad(ciudad.getNombreCiudad())) {
                     if (modeloCiudad.insertarCiudad(ciudad)) {

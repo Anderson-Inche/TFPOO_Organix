@@ -5,6 +5,15 @@
  */
 package vistas;
 
+import controlador.ControlProducto;
+import java.awt.Color;
+import javax.swing.table.DefaultTableModel;
+import java.sql.*;
+import javax.swing.JOptionPane;
+import model.Conexion;
+import model.Producto;
+import model.ProductoDAO;
+
 /**
  *
  * @author ANDERSON
@@ -16,6 +25,7 @@ public class PanelProducto extends javax.swing.JPanel {
      */
     public PanelProducto() {
         initComponents();
+        MostrarTabla();
     }
 
     /**
@@ -188,13 +198,13 @@ public class PanelProducto extends javax.swing.JPanel {
 
     private void AgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgregarActionPerformed
         // TODO add your handling code here:
-        RegistrarCiudad registrarCiudad = new RegistrarCiudad();
-        registrarCiudad.setVisible(true);
-       // ControlCiudad controlCiudad = new ControlCiudad(registrarCiudad);
+        RegistrarProducto registrarProducto = new RegistrarProducto();
+        registrarProducto.setVisible(true);
+        ControlProducto controlProducto = new ControlProducto(registrarProducto);
     }//GEN-LAST:event_AgregarActionPerformed
 
     private void buttonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBuscarActionPerformed
-
+        BuscarPais();
     }//GEN-LAST:event_buttonBuscarActionPerformed
 
     private void txtBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyPressed
@@ -206,9 +216,68 @@ public class PanelProducto extends javax.swing.JPanel {
     }//GEN-LAST:event_txtBuscarKeyReleased
 
     private void actualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actualizarActionPerformed
-       // MostrarTabla();
+       MostrarTabla();
     }//GEN-LAST:event_actualizarActionPerformed
+    public void BuscarPais(){
+        int validacion = 0;
+            ProductoDAO modelo = new ProductoDAO();
+            if (txtBuscar.getText().equals("")) {
+                txtBuscar.setBackground(Color.red);
+                validacion++;
+            }
+            if (validacion == 0) {
+                int codBuscar = Integer.parseInt(txtBuscar.getText());
+                Producto producto = new Producto();
+                producto.setIdProducto(codBuscar);
+                if (modelo.buscarProducto(producto)) {
+                    BuscarProducto buscarProducto = new BuscarProducto();
+                    buscarProducto.setVisible(true);
+                    buscarProducto.lableCodigo.setText(String.valueOf(producto.getIdProducto()));
+                    buscarProducto.lblNombre.setText(producto.getNombreProducto());
+                    buscarProducto.lblDiaReabast.setText(producto.getDiaReabastecimiento().toString());
+                    buscarProducto.lblStock.setText(String.valueOf(producto.getStock()));
+                    buscarProducto.lblReservada.setText(String.valueOf(producto.getCantidadReservada()));
+                    buscarProducto.lblPrecio.setText(String.valueOf(producto.getPrecio()));
+                   // ControlPais controlPais = new ControlPais(buscaPais);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Producto no registrado");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Debe ingresar el Id del producto a buscar");
+            }
+    }
+    
+    void MostrarTabla(){
+        try {
+            DefaultTableModel modelo = new DefaultTableModel();
+            jTablePaises.setModel(modelo);
+            Connection cn = Conexion.conectar();
+            PreparedStatement pst = cn.prepareStatement(
+                    "SELECT idProducto, nameProducto,moneyPrecio,dayReabastecimiento,quantityStock,quantityReserva FROM producto");
 
+            ResultSet result = pst.executeQuery();
+
+            ResultSetMetaData rsMd = result.getMetaData();
+            int cantidadColumns = rsMd.getColumnCount();
+
+            modelo.addColumn("CÓDIGO");
+            modelo.addColumn("NOMBRE");
+            modelo.addColumn("PRECIO");
+            modelo.addColumn("FECHA REABASTECIMIENTO");
+            modelo.addColumn("STOCK DISPONIBLE (T)");
+            modelo.addColumn("STOCK RESERVADO (T)");
+            
+            while (result.next()) {
+                Object[] filas = new Object[cantidadColumns];
+                for (int i = 0; i < cantidadColumns; i++) {
+                    filas[i] = result.getObject(i + 1);
+                }
+                modelo.addRow(filas);
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex.toString());
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Agregar;

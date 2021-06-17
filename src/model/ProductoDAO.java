@@ -7,12 +7,12 @@ import java.sql.PreparedStatement;
  * @author ANDERSON
  */
 public class ProductoDAO {
-    public boolean validarProducto(int id) {
+    public boolean validarProducto(String nombre) {
         boolean state = true;
         try {
             Connection cn = Conexion.conectar();
             PreparedStatement pst = cn.prepareStatement(
-                    "select idProducto from producto where idProducto = '" + id + "' ");
+                    "select nameProducto from producto where nameProducto = '" + nombre + "' ");
             ResultSet rs = pst.executeQuery();
             if (rs.next()) {
                 return false;
@@ -86,7 +86,7 @@ public class ProductoDAO {
         }
     }    
     
-    public boolean buscarPais(Producto producto) { 
+    public boolean buscarProducto(Producto producto) { 
         try {
             Connection cn = Conexion.conectar();
             PreparedStatement pst = cn.prepareStatement(
