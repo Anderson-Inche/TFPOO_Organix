@@ -49,7 +49,7 @@ public class ProductoDAO {
         try {
             Connection cn2 = Conexion.conectar();
             PreparedStatement pst2 = cn2.prepareStatement(
-                    "UPDATE usuario SET nameProducto=? , dayReabastecimiento=? , "
+                    "UPDATE producto SET nameProducto=? , dayReabastecimiento=? , "
                     + "quantityStock=?, quantityReserva=?, moneyPrecio=?  WHERE idProducto = ?");
             
             pst2.setString(1, producto.getNombreProducto());

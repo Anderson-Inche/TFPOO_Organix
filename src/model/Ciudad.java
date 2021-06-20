@@ -36,4 +36,9 @@ public class Ciudad {
     public void setPais(Pais pais) {
         this.pais = pais;
     }
+    
+    public String toString(){
+        return this.nombreCiudad;
+    }
+
 }

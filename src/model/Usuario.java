@@ -93,4 +93,7 @@ public class Usuario {
     public void setNivel_permiso(String nivel_permiso) {
         this.nivel_permiso = nivel_permiso;
     }
+    public String toString(){
+        return this.nombre;
+    }
 }

@@ -1,14 +1,20 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package vistas;
 
-/**
- *
- * @author ANDERSON
- */
+import controlador.ControlFactura;
+import java.awt.Color;
+import java.awt.event.KeyEvent;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import model.Conexion;
+import model.Factura;
+import model.FacturaDAO;
+
+
 public class PanelFactura extends javax.swing.JPanel {
 
     /**
@@ -16,6 +22,7 @@ public class PanelFactura extends javax.swing.JPanel {
      */
     public PanelFactura() {
         initComponents();
+        MostrarTabla();
     }
 
     /**
@@ -166,14 +173,14 @@ public class PanelFactura extends javax.swing.JPanel {
 
     private void ButtonRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonRegistrarActionPerformed
         // TODO add your handling code here:
-        RegistrarPais registrarPais = new RegistrarPais();
-        registrarPais.setVisible(true);
-//        ControlPais controlPais = new ControlPais(registrarPais);
+        RegistrarFactura registrarFactura = new RegistrarFactura();
+        registrarFactura.setVisible(true);
+        ControlFactura controlFactura = new ControlFactura(registrarFactura);
     }//GEN-LAST:event_ButtonRegistrarActionPerformed
 
     private void buttonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBuscarActionPerformed
         // TODO add your handling code here:
-//        BuscarPais();
+        Buscar();
     }//GEN-LAST:event_buttonBuscarActionPerformed
 
     private void txtBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyPressed
@@ -182,16 +189,76 @@ public class PanelFactura extends javax.swing.JPanel {
 
     private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
         // TODO add your handling code here:
-       // if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-           // BuscarPais();
-      //  }
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            Buscar();
+        }
     }//GEN-LAST:event_txtBuscarKeyReleased
 
     private void actualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actualizarActionPerformed
-       // MostrarTabla();
+        MostrarTabla();
     }//GEN-LAST:event_actualizarActionPerformed
+    void MostrarTabla(){
+        try {
+            DefaultTableModel modelo = new DefaultTableModel();
+            jTablePaises.setModel(modelo);
+            Connection cn = Conexion.conectar();
+            PreparedStatement pst = cn.prepareStatement(
+                    "SELECT idFactura, idReserva, numFactura,numSerie,flagCancelado,dayFactura,moneyPrecioFinal FROM factura");
 
+            ResultSet result = pst.executeQuery();
 
+            ResultSetMetaData rsMd = result.getMetaData();
+            int cantidadColumns = rsMd.getColumnCount();
+
+            modelo.addColumn("CÓDIGO");
+            modelo.addColumn("RESERVA");
+            modelo.addColumn("NÚMERO DE FACTURA");
+            modelo.addColumn("NÚMERO DE SERIE");
+            modelo.addColumn("CANCELADO");
+            modelo.addColumn("FECHA DE EMISIÓN");
+            modelo.addColumn("MONTO($)");
+            
+            while (result.next()) {
+                Object[] filas = new Object[cantidadColumns];
+                for (int i = 0; i < cantidadColumns; i++) {
+                    filas[i] = result.getObject(i + 1);
+                }
+                modelo.addRow(filas);
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex.toString());
+        }
+    }
+    public void Buscar(){
+        int validacion = 0;
+            FacturaDAO modelFac = new FacturaDAO();
+            if (txtBuscar.getText().equals("")) {
+                txtBuscar.setBackground(Color.red);
+                validacion++;
+            }
+            if (validacion == 0) {
+                int codCiudadBuscar = Integer.parseInt(txtBuscar.getText());
+                Factura factura = new Factura();
+                factura.setIdFactura(codCiudadBuscar);
+                if (modelFac.buscar(factura)) {
+                    
+                    BuscarFactura buscarFactura = new BuscarFactura();
+                    buscarFactura.setVisible(true);
+                    buscarFactura.lableCodigo.setText(String.valueOf(factura.getIdFactura()));
+                    buscarFactura.lblFecha.setText(factura.getDayFactura().toString());
+                    buscarFactura.lblMonto.setText(String.valueOf(factura.getMoneyPrecioFinal()));
+                    buscarFactura.lblNumFac.setText(factura.getNumFactura());
+                    buscarFactura.lblNumSerie.setText(factura.getNumSerie());
+                    buscarFactura.lblReserva.setText(String.valueOf(factura.getReserva().getIdReserva()));
+                    
+                    ControlFactura controlFac = new ControlFactura(buscarFactura);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Factura no registrada");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Debe ingresar el Id de la FACTURA a buscar");
+            }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ButtonRegistrar;
     private javax.swing.JButton actualizar;

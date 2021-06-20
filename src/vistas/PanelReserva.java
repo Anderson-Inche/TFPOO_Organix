@@ -1,14 +1,20 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package vistas;
 
-/**
- *
- * @author ANDERSON
- */
+import controlador.ControlReserva;
+import java.awt.Color;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import model.Conexion;
+import model.Producto;
+import model.ProductoDAO;
+import model.Reserva;
+import model.ReservaDAO;
+
 public class PanelReserva extends javax.swing.JPanel {
 
     /**
@@ -16,6 +22,7 @@ public class PanelReserva extends javax.swing.JPanel {
      */
     public PanelReserva() {
         initComponents();
+        MostrarTabla();
     }
 
     /**
@@ -188,13 +195,13 @@ public class PanelReserva extends javax.swing.JPanel {
 
     private void AgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgregarActionPerformed
         // TODO add your handling code here:
-        RegistrarCiudad registrarCiudad = new RegistrarCiudad();
-        registrarCiudad.setVisible(true);
-       // ControlCiudad controlCiudad = new ControlCiudad(registrarCiudad);
+        RegistrarReserva registrarReserva = new RegistrarReserva();
+        registrarReserva.setVisible(true);
+        ControlReserva controlCiudad = new ControlReserva(registrarReserva);
     }//GEN-LAST:event_AgregarActionPerformed
 
     private void buttonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBuscarActionPerformed
-
+        BuscarPais();
     }//GEN-LAST:event_buttonBuscarActionPerformed
 
     private void txtBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyPressed
@@ -206,10 +213,69 @@ public class PanelReserva extends javax.swing.JPanel {
     }//GEN-LAST:event_txtBuscarKeyReleased
 
     private void actualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actualizarActionPerformed
-      //  MostrarTabla();
+      MostrarTabla();
     }//GEN-LAST:event_actualizarActionPerformed
+    void MostrarTabla(){
+        try {
+            DefaultTableModel modelo = new DefaultTableModel();
+            jTablePaises.setModel(modelo);
+            Connection cn = Conexion.conectar();
+            PreparedStatement pst = cn.prepareStatement(
+                    "SELECT reserva.idReserva, usuario.nameUsuario, ciudad.nameCiudad, reserva.flagAnulado, reserva.dayReserva, reserva.dayLlegada, reserva.dayVencimiento FROM reserva join usuario on reserva.idUsuario = usuario.idUsuario JOIN ciudad on ciudad.idCiudad = reserva.idCiudad");
 
+            ResultSet result = pst.executeQuery();
 
+            ResultSetMetaData rsMd = result.getMetaData();
+            int cantidadColumns = rsMd.getColumnCount();
+
+            modelo.addColumn("CÓDIGO");
+            modelo.addColumn("USUARIO");
+            modelo.addColumn("CIUDAD");
+            modelo.addColumn("ANULADO");
+            modelo.addColumn("FECHA DE RESERVA");
+            modelo.addColumn("FECHA DE LLEGADA");
+            modelo.addColumn("FECHA DE VENCIMIENTO");
+            
+            while (result.next()) {
+                Object[] filas = new Object[cantidadColumns];
+                for (int i = 0; i < cantidadColumns; i++) {
+                    filas[i] = result.getObject(i + 1);
+                }
+                modelo.addRow(filas);
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex.toString());
+        }
+    }
+    public void BuscarPais(){
+        int validacion = 0;
+            ReservaDAO modelo = new ReservaDAO();
+            if (txtBuscar.getText().equals("")) {
+                txtBuscar.setBackground(Color.red);
+                validacion++;
+            }
+            if (validacion == 0) {
+                int codBuscar = Integer.parseInt(txtBuscar.getText());
+                Reserva reserva = new Reserva();
+                reserva.setIdReserva(codBuscar);
+                if (modelo.buscar(reserva)) {
+                    BuscarReserva buscarReserva = new BuscarReserva();
+                    buscarReserva.setVisible(true);
+                    buscarReserva.lableCodigo.setText(String.valueOf(reserva.getIdReserva()));
+                    buscarReserva.lblUsuario.setText(reserva.getUsuario().getNombre() + "  " + reserva.getUsuario().getApellido());
+                    buscarReserva.lblCiudad.setText(reserva.getCiudad().getNombreCiudad());
+                    buscarReserva.lblAnulado.setText(reserva.getFlagAnulado());
+                    buscarReserva.lblFechaLlegada.setText(reserva.getDayLlegada().toString());
+                    buscarReserva.lblFechaVencimiento.setText(reserva.getDayVencimiento().toString());
+                    buscarReserva.lblFechaReserva.setText(reserva.getDayReserva().toString());
+                    ControlReserva controlReserva = new ControlReserva(buscarReserva);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Reserva no registrada");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Debe ingresar el Id del producto a buscar");
+            }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Agregar;
     private javax.swing.JButton actualizar;

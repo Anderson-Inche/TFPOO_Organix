@@ -12,16 +12,18 @@ public class Reserva {
     private Ciudad ciudad;
     private Usuario usuario;
     private Date dayReserva;
-    private Date daydayLlegada;
-    private boolean flagAnulado;
+    private Date dayLlegada;
+    private String flagAnulado;
     private Date dayVencimiento;
-
-    public Reserva(int idReserva, Ciudad ciudad, Usuario usuario, Date dayReserva, Date daydayLlegada, boolean flagAnulado, Date dayVencimiento) {
+    public Reserva(){
+        
+    }
+    public Reserva(int idReserva, Ciudad ciudad, Usuario usuario, Date dayReserva, Date dayLlegada, String flagAnulado, Date dayVencimiento) {
         this.idReserva = idReserva;
         this.ciudad = ciudad;
         this.usuario = usuario;
         this.dayReserva = dayReserva;
-        this.daydayLlegada = daydayLlegada;
+        this.dayLlegada = dayLlegada;
         this.flagAnulado = flagAnulado;
         this.dayVencimiento = dayVencimiento;
     }
@@ -58,19 +60,19 @@ public class Reserva {
         this.dayReserva = dayReserva;
     }
 
-    public Date getDaydayLlegada() {
-        return daydayLlegada;
+    public Date getDayLlegada() {
+        return dayLlegada;
     }
 
-    public void setDaydayLlegada(Date daydayLlegada) {
-        this.daydayLlegada = daydayLlegada;
+    public void setDayLlegada(Date dayLlegada) {
+        this.dayLlegada = dayLlegada;
     }
 
-    public boolean isFlagAnulado() {
+    public String getFlagAnulado() {
         return flagAnulado;
     }
 
-    public void setFlagAnulado(boolean flagAnulado) {
+    public void setFlagAnulado(String flagAnulado) {
         this.flagAnulado = flagAnulado;
     }
 
@@ -81,4 +83,8 @@ public class Reserva {
     public void setDayVencimiento(Date dayVencimiento) {
         this.dayVencimiento = dayVencimiento;
     }
+    public String toString(){
+        return ""+this.idReserva;
+    }
+   
 }

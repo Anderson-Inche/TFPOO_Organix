@@ -111,7 +111,7 @@ public class CiudadDAO {
                 cn.close(); 
                 return "";
         } catch (SQLException e) {
-            System.err.println("Error al validar usuario " + e);
+            System.err.println("Error al validar ciudad " + e);
             return "";
         }
     }

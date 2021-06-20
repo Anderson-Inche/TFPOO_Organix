@@ -61,6 +61,7 @@ public class ControlProducto implements ActionListener {
                 validar++;
             }
             if (validar == 0){
+                
                 String nombre = registrarProductofrm.txtNombre.getText();
                 Double precio = Double.parseDouble(registrarProductofrm.txtPrecio.getText());
                 Date dayReabastecimiento = registrarProductofrm.jdcDiaReabastecimiento.getDate();
