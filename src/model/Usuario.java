@@ -8,6 +8,7 @@ package model;
 public class Usuario {
 
     private int idUsuario;
+    private String nombreUsuario;
     private String nombre;
     private String apellido;
     private String idDocumento;
@@ -15,8 +16,12 @@ public class Usuario {
     private String email;
     private String password;
     private String nivel_permiso;
-    public Usuario(int idUsuario, String nombre, String apellido, String idDocumento, String direccion, String email, String password, String nivel_permiso) {
+    public Usuario(){
+        
+    }
+    public Usuario(int idUsuario, String nombreUsuario, String nombre, String apellido, String idDocumento, String direccion, String email, String password, String nivel_permiso) {
         this.idUsuario = idUsuario;
+        this.nombreUsuario = nombreUsuario;
         this.nombre = nombre;
         this.apellido = apellido;
         this.idDocumento = idDocumento;
@@ -26,16 +31,20 @@ public class Usuario {
         this.nivel_permiso = nivel_permiso;
     }
 
-    public Usuario() {
-        
-    }
-
     public int getIdUsuario() {
         return idUsuario;
     }
 
     public void setIdUsuario(int idUsuario) {
         this.idUsuario = idUsuario;
+    }
+
+    public String getNombreUsuario() {
+        return nombreUsuario;
+    }
+
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
     }
 
     public String getNombre() {
@@ -93,7 +102,8 @@ public class Usuario {
     public void setNivel_permiso(String nivel_permiso) {
         this.nivel_permiso = nivel_permiso;
     }
+    
     public String toString(){
-        return this.nombre;
+        return this.nombreUsuario;
     }
 }

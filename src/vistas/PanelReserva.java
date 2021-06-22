@@ -2,6 +2,7 @@ package vistas;
 
 import controlador.ControlReserva;
 import java.awt.Color;
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -201,7 +202,7 @@ public class PanelReserva extends javax.swing.JPanel {
     }//GEN-LAST:event_AgregarActionPerformed
 
     private void buttonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBuscarActionPerformed
-        BuscarPais();
+        Buscar();
     }//GEN-LAST:event_buttonBuscarActionPerformed
 
     private void txtBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyPressed
@@ -209,7 +210,9 @@ public class PanelReserva extends javax.swing.JPanel {
     }//GEN-LAST:event_txtBuscarKeyPressed
 
     private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
-
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            Buscar();
+        }
     }//GEN-LAST:event_txtBuscarKeyReleased
 
     private void actualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actualizarActionPerformed
@@ -247,7 +250,7 @@ public class PanelReserva extends javax.swing.JPanel {
             System.err.println(ex.toString());
         }
     }
-    public void BuscarPais(){
+    public void Buscar(){
         int validacion = 0;
             ReservaDAO modelo = new ReservaDAO();
             if (txtBuscar.getText().equals("")) {

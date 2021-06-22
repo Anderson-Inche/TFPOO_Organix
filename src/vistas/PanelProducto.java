@@ -7,6 +7,7 @@ package vistas;
 
 import controlador.ControlProducto;
 import java.awt.Color;
+import java.awt.event.KeyEvent;
 import javax.swing.table.DefaultTableModel;
 import java.sql.*;
 import javax.swing.JOptionPane;
@@ -204,7 +205,7 @@ public class PanelProducto extends javax.swing.JPanel {
     }//GEN-LAST:event_AgregarActionPerformed
 
     private void buttonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBuscarActionPerformed
-        BuscarPais();
+        Buscar();
     }//GEN-LAST:event_buttonBuscarActionPerformed
 
     private void txtBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyPressed
@@ -212,13 +213,15 @@ public class PanelProducto extends javax.swing.JPanel {
     }//GEN-LAST:event_txtBuscarKeyPressed
 
     private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
-
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            Buscar();
+        }
     }//GEN-LAST:event_txtBuscarKeyReleased
 
     private void actualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actualizarActionPerformed
        MostrarTabla();
     }//GEN-LAST:event_actualizarActionPerformed
-    public void BuscarPais(){
+    public void Buscar(){
         int validacion = 0;
             ProductoDAO modelo = new ProductoDAO();
             if (txtBuscar.getText().equals("")) {
@@ -238,7 +241,7 @@ public class PanelProducto extends javax.swing.JPanel {
                     buscarProducto.lblStock.setText(String.valueOf(producto.getStock()));
                     buscarProducto.lblReservada.setText(String.valueOf(producto.getCantidadReservada()));
                     buscarProducto.lblPrecio.setText(String.valueOf(producto.getPrecio()));
-                   // ControlPais controlPais = new ControlPais(buscaPais);
+                    ControlProducto controlProducto = new ControlProducto(buscarProducto);
                 } else {
                     JOptionPane.showMessageDialog(null, "Producto no registrado");
                 }
@@ -262,7 +265,7 @@ public class PanelProducto extends javax.swing.JPanel {
 
             modelo.addColumn("CÓDIGO");
             modelo.addColumn("NOMBRE");
-            modelo.addColumn("PRECIO");
+            modelo.addColumn("PRECIO($)");
             modelo.addColumn("FECHA REABASTECIMIENTO");
             modelo.addColumn("STOCK DISPONIBLE (T)");
             modelo.addColumn("STOCK RESERVADO (T)");

@@ -1,11 +1,18 @@
 package vistas;
+
+import javax.swing.WindowConstants;
+
 public class Cliente extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Cliente
-     */
+    String user, nombre_usuario;
+    public static int sesion_usuario;
     public Cliente() {
         initComponents();
+        user = LoginFrame.user;
+        sesion_usuario = 1;
+        
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 
     /**
@@ -100,15 +107,14 @@ public class Cliente extends javax.swing.JFrame {
                     .addComponent(ButtonFactura, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(ButtonFactura1, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(77, 77, 77))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(ButtonProductos2, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(ButtonReserva, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ButtonProductos3, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(ButtonProductos3, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(82, 82, 82)
+                        .addComponent(jLabel1)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -185,8 +191,9 @@ public class Cliente extends javax.swing.JFrame {
 
     private void ButtonProductos3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonProductos3ActionPerformed
         lbTitulo.setText("Producto");
-        PanelProducto panelProducto = new PanelProducto();
+        PanelProductosCliente panelProducto = new PanelProductosCliente();
         PanelMain.add(panelProducto);
+        
     }//GEN-LAST:event_ButtonProductos3ActionPerformed
 
     private void ButtonFactura1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonFactura1ActionPerformed

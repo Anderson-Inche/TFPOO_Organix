@@ -151,7 +151,7 @@ public class ReservaDAO {
                 dat = new Usuario();
                 
                 dat.setIdUsuario(rs.getInt("idUsuario"));
-                dat.setNombre(rs.getString("nameUsuario"));
+                dat.setNombre(rs.getString("nombreUsuario"));
 
                 datos.add(dat);
             }
@@ -196,7 +196,7 @@ public class ReservaDAO {
         try {
              Connection cn = Conexion.conectar();
                 PreparedStatement pst = cn.prepareStatement(
-                        "select * from usuario where nameUsuario = '" + nombre + "'");
+                        "select * from usuario where nombreUsuario = '" + nombre + "'");
                 ResultSet rs = pst.executeQuery();
                 if (rs.next()){
                     Id = rs.getInt("idUsuario");

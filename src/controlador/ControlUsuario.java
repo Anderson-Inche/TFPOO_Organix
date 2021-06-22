@@ -1,4 +1,5 @@
 package controlador;
+
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -31,12 +32,14 @@ public class ControlUsuario implements ActionListener {
         this.registrarUsuarioAdminFrm = registrarUsuarioAdminFrm;
         this.registrarUsuarioAdminFrm.ButtonRegistrar.addActionListener(this);
     }
-    public ControlUsuario(BuscarUsuario buscarUsuario){
-        this.buscarUsuario=buscarUsuario;
+
+    public ControlUsuario(BuscarUsuario buscarUsuario) {
+        this.buscarUsuario = buscarUsuario;
         this.buscarUsuario.buttonModificar.addActionListener(this);
         this.buscarUsuario.buttonEliminar.addActionListener(this);
     }
-    public ControlUsuario(ModificarUsuario modificarUsuario){
+
+    public ControlUsuario(ModificarUsuario modificarUsuario) {
         this.modificarUsuario = modificarUsuario;
         this.modificarUsuario.ButtonModificar.addActionListener(this);
     }
@@ -46,6 +49,8 @@ public class ControlUsuario implements ActionListener {
 
         String nombre, apellido, documento, direccion, email, password;
         if (event.getSource() == panelRegistrarUser.botonRegistrar) {
+
+            String nombreUsuario = panelRegistrarUser.txtNombreUsuario.getText().trim();
             nombre = panelRegistrarUser.txtNombre.getText().trim();
             apellido = panelRegistrarUser.txtApellido.getText().trim();
             documento = panelRegistrarUser.txtDocumento.getText().trim();
@@ -53,8 +58,12 @@ public class ControlUsuario implements ActionListener {
             email = panelRegistrarUser.txtCorreo.getText().trim();
             password = panelRegistrarUser.txtContraseña.getText().trim();
 
-            Usuario user = new Usuario(WIDTH, nombre, apellido, documento, direccion, email, password, "Cliente");
+            Usuario user = new Usuario(WIDTH, nombreUsuario, nombre, apellido, documento, direccion, email, password, "Cliente");
             int validacion = 0;
+            if (user.getNombreUsuario().equals("")) {
+                panelRegistrarUser.txtNombreUsuario.setBackground(Color.red);
+                validacion++;
+            }
             if (user.getEmail().equals("")) {
                 panelRegistrarUser.txtCorreo.setBackground(Color.red);
                 validacion++;
@@ -80,7 +89,7 @@ public class ControlUsuario implements ActionListener {
                 validacion++;
             }
             if (validacion == 0) {
-                if (modeloUsuario.verificarUser(user.getIdDocumento())) {
+                if (modeloUsuario.verificarUser(user.getNombreUsuario())) {
 
                     if (modeloUsuario.insertarUser(user)) {
                         panelRegistrarUser.txtCorreo.setBackground(Color.green);
@@ -140,13 +149,15 @@ public class ControlUsuario implements ActionListener {
             email = registrarUsuarioAdminFrm.txtCorreo.getText().trim();
             password = registrarUsuarioAdminFrm.txtContraseña.getText().trim();
             String permiso = registrarUsuarioAdminFrm.cbxPermiso.getSelectedItem().toString();
+            String nombreUsuario = registrarUsuarioAdminFrm.txtNombreUsuario.getText().trim();
 
-            Usuario user = new Usuario(id, nombre, apellido, documento, direccion, email, password, permiso);
+            Usuario user = new Usuario(id, nombreUsuario, nombre, apellido, documento, direccion, email, password, permiso);
 
             if (validacion == 0) {
-                if (modeloUsuario.verificarUser(user.getIdDocumento())) {
+                if (modeloUsuario.verificarUser( user.getNombreUsuario())) {
 
                     if (modeloUsuario.insertarUser(user)) {
+                        registrarUsuarioAdminFrm.txtNombreUsuario.setBackground(Color.green);
                         registrarUsuarioAdminFrm.txtCorreo.setBackground(Color.green);
                         registrarUsuarioAdminFrm.txtNombre.setBackground(Color.green);
                         registrarUsuarioAdminFrm.txtApellido.setBackground(Color.green);
@@ -164,7 +175,7 @@ public class ControlUsuario implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Debe llenar todos los campos");
             }
         }
-        if (event.getSource() == buscarUsuario.buttonEliminar){
+        if (event.getSource() == buscarUsuario.buttonEliminar) {
             int idEliminar = Integer.parseInt(buscarUsuario.lbId.getText());
             Usuario usuario = new Usuario();
             usuario.setIdUsuario(idEliminar);
@@ -176,11 +187,11 @@ public class ControlUsuario implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Usuario no se pudó eliminar");
             }
         }
-        if (event.getSource() == modificarUsuario.ButtonModificar){
+        if (event.getSource() == modificarUsuario.ButtonModificar) {
             int validacion = 0;
-            
-            if (modificarUsuario.txtNombre.getText().equals("")) {
-                modificarUsuario.txtNombre.setBackground(Color.red);
+
+            if (modificarUsuario.txtNombreUsuario.getText().equals("")) {
+                modificarUsuario.txtNombreUsuario.setBackground(Color.red);
                 validacion++;
             }
             if (modificarUsuario.txtApellido.getText().equals("")) {
@@ -195,29 +206,36 @@ public class ControlUsuario implements ActionListener {
                 modificarUsuario.txtDireccion.setBackground(Color.red);
                 validacion++;
             }
-            if (modificarUsuario.txtCorreo.equals("")) {
+            if (modificarUsuario.txtCorreo.getText().equals("")) {
                 modificarUsuario.txtContraseña.setBackground(Color.red);
                 validacion++;
             }
-            if (modificarUsuario.txtContraseña.equals("")) {
+            if (modificarUsuario.txtContraseña.getText().equals("")) {
                 modificarUsuario.txtContraseña.setBackground(Color.red);
                 validacion++;
             }
-            if (validacion == 0){
+            if (modificarUsuario.cbxPermiso.getSelectedItem().toString().equals("Seleccione un permiso")) {
+                modificarUsuario.cbxPermiso.setBackground(Color.red);
+                validacion++;
+            }
+            if (validacion == 0) {
                 int id = Integer.parseInt(modificarUsuario.labelCodigo.getText().trim());
-                nombre = modificarUsuario.txtNombre.getText().trim();
+                nombre = modificarUsuario.txtNombre1.getText().trim();
                 apellido = modificarUsuario.txtApellido.getText().trim();
                 documento = modificarUsuario.txtDocumento.getText().trim();
                 direccion = modificarUsuario.txtDireccion.getText().trim();
                 email = modificarUsuario.txtCorreo.getText().trim();
                 password = modificarUsuario.txtContraseña.getText().trim();
                 String permiso = modificarUsuario.cbxPermiso.getSelectedItem().toString();
-
-                Usuario user = new Usuario(id, nombre, apellido, documento, direccion, email, password, permiso);
-                if (modeloUsuario.modificarUser(user)){
-                    JOptionPane.showMessageDialog(null, "Usuario Modificado");
-                    modificarUsuario.dispose();
-                }
+                String nombreUsuario = modificarUsuario.txtNombreUsuario.getText().trim();
+                Usuario user = new Usuario(id, nombreUsuario, nombre, apellido, documento, direccion, email, password, permiso);
+//                if (modeloUsuario.verificarUser( nombreUsuario)) {
+                    if (modeloUsuario.modificarUser(user)) {
+                        JOptionPane.showMessageDialog(null, "Usuario Modificado");
+                        modificarUsuario.dispose();
+                    }
+//                }else
+//                    JOptionPane.showMessageDialog(null, "Nombre de Usuario ya existe");
             }
         }
 

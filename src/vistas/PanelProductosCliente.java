@@ -1,9 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package vistas;
+
+import java.awt.Color;
+import java.awt.event.KeyEvent;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import model.Conexion;
+import model.Producto;
+import model.ProductoDAO;
 
 /**
  *
@@ -16,6 +24,7 @@ public class PanelProductosCliente extends javax.swing.JPanel {
      */
     public PanelProductosCliente() {
         initComponents();
+        MostrarTabla();
     }
 
     /**
@@ -194,7 +203,7 @@ public class PanelProductosCliente extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBuscarActionPerformed
-
+        Buscar();
     }//GEN-LAST:event_buttonBuscarActionPerformed
 
     private void txtBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyPressed
@@ -202,13 +211,72 @@ public class PanelProductosCliente extends javax.swing.JPanel {
     }//GEN-LAST:event_txtBuscarKeyPressed
 
     private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
-
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            Buscar();
+        }
     }//GEN-LAST:event_txtBuscarKeyReleased
 
     private void actualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actualizarActionPerformed
-        // MostrarTabla();
+         MostrarTabla();
     }//GEN-LAST:event_actualizarActionPerformed
+    void MostrarTabla(){
+        try {
+            DefaultTableModel modelo = new DefaultTableModel();
+            jTablePaises.setModel(modelo);
+            Connection cn = Conexion.conectar();
+            PreparedStatement pst = cn.prepareStatement(
+                    "SELECT idProducto, nameProducto,moneyPrecio,dayReabastecimiento,quantityStock FROM producto");
 
+            ResultSet result = pst.executeQuery();
+
+            ResultSetMetaData rsMd = result.getMetaData();
+            int cantidadColumns = rsMd.getColumnCount();
+
+            modelo.addColumn("CÓDIGO");
+            modelo.addColumn("NOMBRE");
+            modelo.addColumn("PRECIO($)");
+            modelo.addColumn("FECHA REABASTECIMIENTO");
+            modelo.addColumn("STOCK DISPONIBLE (T)");
+            
+            while (result.next()) {
+                Object[] filas = new Object[cantidadColumns];
+                for (int i = 0; i < cantidadColumns; i++) {
+                    filas[i] = result.getObject(i + 1);
+                }
+                modelo.addRow(filas);
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex.toString());
+        }
+    }
+    public void Buscar(){
+        int validacion = 0;
+            ProductoDAO modelo = new ProductoDAO();
+            if (txtBuscar.getText().equals("")) {
+                txtBuscar.setBackground(Color.red);
+                validacion++;
+            }
+            if (validacion == 0) {
+                int codBuscar = Integer.parseInt(txtBuscar.getText());
+                Producto producto = new Producto();
+                producto.setIdProducto(codBuscar);
+                if (modelo.buscarProducto(producto)) {
+                    BuscarProductoCliente buscarProducto = new BuscarProductoCliente();
+                    buscarProducto.lableCodigo.setText(String.valueOf(producto.getIdProducto()));
+                    buscarProducto.lblNombre.setText(producto.getNombreProducto());
+                    buscarProducto.lblDiaReabast.setText(producto.getDiaReabastecimiento().toString());
+                    buscarProducto.lblStock.setText(String.valueOf(producto.getStock()));
+                    buscarProducto.lblPrecio.setText(String.valueOf(producto.getPrecio()));
+                    buscarProducto.setVisible(true);
+                    System.out.println("CLIENTE");
+                    
+                } else {
+                    JOptionPane.showMessageDialog(null, "Producto no registrado");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Debe ingresar el Id del producto a buscar");
+            }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton actualizar;

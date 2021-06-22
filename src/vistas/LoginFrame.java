@@ -230,7 +230,7 @@ public class LoginFrame extends javax.swing.JFrame {
             try {
                 Connection cn = Conexion.conectar();
                 PreparedStatement pst = cn.prepareStatement(
-                        "select permiso from usuario where nameUsuario = '" + user
+                        "select permiso from usuario where nombreUsuario = '" + user
                         + "' and password = '" + pass + "'");
 
                 ResultSet result = pst.executeQuery();
