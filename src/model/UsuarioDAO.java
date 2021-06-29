@@ -29,8 +29,8 @@ public class UsuarioDAO extends Conexion {
             PreparedStatement pst2 = cn2.prepareStatement(
                     "insert  into usuario values (?,?,?,?,?,?,?,?,?)");
             pst2.setInt(1, 0);
-            pst2.setString(2, user.getNombre());
-            pst2.setString(3, user.getNombreUsuario());
+            pst2.setString(2, user.getNombreUsuario());
+            pst2.setString(3, user.getNombre());
             pst2.setString(4, user.getApellido());
             pst2.setString(5, user.getIdDocumento());
             pst2.setString(6, user.getDireccion());

@@ -7,6 +7,7 @@ package vistas;
 
 import controlador.ControlReserva;
 import java.awt.Color;
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -154,8 +155,8 @@ public class PanelReservaCliente extends javax.swing.JPanel {
                 .addGap(21, 21, 21)
                 .addComponent(actualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(436, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 579, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(87, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -234,7 +235,9 @@ public class PanelReservaCliente extends javax.swing.JPanel {
 
     private void txtBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyPressed
         // TODO add your handling code here:
-        
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            Buscar();
+        }
     }//GEN-LAST:event_txtBuscarKeyPressed
 
     private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
@@ -290,7 +293,7 @@ public class PanelReservaCliente extends javax.swing.JPanel {
             Reserva reserva = new Reserva();
             reserva.setIdReserva(codBuscar);
             if (modelo.buscar(reserva)) {
-                BuscarReserva buscarReserva = new BuscarReserva();
+                BuscarReservaCliente buscarReserva = new BuscarReservaCliente();
                 buscarReserva.setVisible(true);
                 buscarReserva.lableCodigo.setText(String.valueOf(reserva.getIdReserva()));
                 buscarReserva.lblUsuario.setText(reserva.getUsuario().getNombre() + "  " + reserva.getUsuario().getApellido());
@@ -299,7 +302,6 @@ public class PanelReservaCliente extends javax.swing.JPanel {
                 buscarReserva.lblFechaLlegada.setText(reserva.getDayLlegada().toString());
                 buscarReserva.lblFechaVencimiento.setText(reserva.getDayVencimiento().toString());
                 buscarReserva.lblFechaReserva.setText(reserva.getDayReserva().toString());
-                ControlReserva controlReserva = new ControlReserva(buscarReserva);
             } else {
                 JOptionPane.showMessageDialog(null, "Reserva no registrada");
             }
@@ -307,6 +309,7 @@ public class PanelReservaCliente extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Debe ingresar el Id del producto a buscar");
         }
     }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Agregar;
     private javax.swing.JButton actualizar;

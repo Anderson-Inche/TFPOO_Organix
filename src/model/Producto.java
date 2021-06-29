@@ -15,14 +15,15 @@ public class Producto {
     private int idProducto;
     private String nombreProducto;
     private Date diaReabastecimiento;
-    private int stock;
-    private int cantidadReservada;
+    private double stock;
+    private double cantidadReservada;
     private double precio;
     
     public Producto(){
         
     }
-    public Producto(int idProducto, String nombreProducto, Date diaReabastecimiento, int stock, int cantidadReservada, double precio) {
+
+    public Producto(int idProducto, String nombreProducto, Date diaReabastecimiento, double stock, double cantidadReservada, double precio) {
         this.idProducto = idProducto;
         this.nombreProducto = nombreProducto;
         this.diaReabastecimiento = diaReabastecimiento;
@@ -55,19 +56,19 @@ public class Producto {
         this.diaReabastecimiento = diaReabastecimiento;
     }
 
-    public int getStock() {
+    public double getStock() {
         return stock;
     }
 
-    public void setStock(int stock) {
+    public void setStock(double stock) {
         this.stock = stock;
     }
 
-    public int getCantidadReservada() {
+    public double getCantidadReservada() {
         return cantidadReservada;
     }
 
-    public void setCantidadReservada(int cantidadReservada) {
+    public void setCantidadReservada(double cantidadReservada) {
         this.cantidadReservada = cantidadReservada;
     }
 
@@ -79,5 +80,7 @@ public class Producto {
         this.precio = precio;
     }
     
-    
+    public String toString(){
+        return this.nombreProducto;
+    }
 }

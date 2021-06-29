@@ -5,17 +5,27 @@
  */
 package vistas;
 
-/**
- *
- * @author ANDERSON
- */
+import java.awt.Color;
+import java.awt.event.KeyEvent;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import model.Conexion;
+import model.Pedido;
+import model.PedidoDAO;
+
+
 public class PanelPedidosCliente extends javax.swing.JPanel {
 
-    /**
-     * Creates new form PanelPedidosCliente
-     */
+    String user;
     public PanelPedidosCliente() {
         initComponents();
+        user = LoginFrame.user;
+        MostrarTabla();
     }
 
     /**
@@ -139,8 +149,8 @@ public class PanelPedidosCliente extends javax.swing.JPanel {
                 .addGap(21, 21, 21)
                 .addComponent(actualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(436, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 592, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(74, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -188,12 +198,12 @@ public class PanelPedidosCliente extends javax.swing.JPanel {
 
     private void AgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgregarActionPerformed
         // TODO add your handling code here:
-        RegistrarCiudad registrarCiudad = new RegistrarCiudad();
-        registrarCiudad.setVisible(true);
+        RegistrarPedido registrarPedido = new RegistrarPedido();
+        registrarPedido.setVisible(true);
     }//GEN-LAST:event_AgregarActionPerformed
 
     private void buttonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBuscarActionPerformed
-
+        Buscar();
     }//GEN-LAST:event_buttonBuscarActionPerformed
 
     private void txtBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyPressed
@@ -201,13 +211,69 @@ public class PanelPedidosCliente extends javax.swing.JPanel {
     }//GEN-LAST:event_txtBuscarKeyPressed
 
     private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
-
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            Buscar();
+        }
     }//GEN-LAST:event_txtBuscarKeyReleased
 
     private void actualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actualizarActionPerformed
- //       MostrarTabla();
+        MostrarTabla();
     }//GEN-LAST:event_actualizarActionPerformed
+    void MostrarTabla(){
+        try {
+            DefaultTableModel modelo = new DefaultTableModel();
+            jTablePaises.setModel(modelo);
+            Connection cn = Conexion.conectar();
+            PreparedStatement pst = cn.prepareStatement(
+                    "SELECT pedido.idPedido,pedido.idReserva, producto.nameProducto, pedido.quantityPedido, pedido.moneyPrecio FROM pedido join producto on pedido.idProducto =producto.idProducto join reserva on pedido.idReserva=reserva.idReserva join usuario on reserva.idUsuario = usuario.idUsuario WHERE usuario.nombreUsuario = '" + user + "'");
 
+            ResultSet result = pst.executeQuery();
+
+            ResultSetMetaData rsMd = result.getMetaData();
+            int cantidadColumns = rsMd.getColumnCount();
+
+            modelo.addColumn("CÓDIGO");
+            modelo.addColumn("RESERVA");
+            modelo.addColumn("PRODUCTO");
+            modelo.addColumn("PESO (T)");
+            modelo.addColumn("MONTO ($)");
+            while (result.next()) {
+                Object[] filas = new Object[cantidadColumns];
+                for (int i = 0; i < cantidadColumns; i++) {
+                    filas[i] = result.getObject(i + 1);
+                }
+                modelo.addRow(filas);
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex.toString());
+        }
+    }
+    public void Buscar() {
+        int validacion = 0;
+        PedidoDAO modeloPed = new PedidoDAO();
+        if (txtBuscar.getText().equals("")) {
+            txtBuscar.setBackground(Color.red);
+            validacion++;
+        }
+        if (validacion == 0) {
+            int cod = Integer.parseInt(txtBuscar.getText());
+            Pedido pedido = new Pedido();
+            pedido.setIdPedido(cod);
+            if (modeloPed.buscarPedido(pedido)) {
+                BuscarPedido buscarPed = new BuscarPedido();
+                buscarPed.setVisible(true);
+                buscarPed.lblCodigo.setText(String.valueOf(pedido.getIdPedido()));
+                buscarPed.lblCodReserva.setText(String.valueOf(pedido.getReserva().getIdReserva()));
+                buscarPed.lblProducto.setText(pedido.getProducto().getNombreProducto());
+                buscarPed.lblPrecioProd.setText(String.valueOf(pedido.getMoneyPrecio()));
+                buscarPed.lblPeso.setText(String.valueOf(pedido.getQuantityPeso()));
+            } else {
+                JOptionPane.showMessageDialog(null, "Pedido no registrado");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Debe ingresar el Id del Pedido a buscar");
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Agregar;

@@ -41,7 +41,7 @@ public class ReservaDAO {
         try {
             Connection cn2 = Conexion.conectar();
             PreparedStatement pst2 = cn2.prepareStatement(
-                    "UPDATE reserva SET idUsuario= ?, idCiudad=?,dayReserva=?,dayLlegada=?,falgAnulado=?,dayVencimiento=? WHERE idReserva = ?");
+                    "UPDATE reserva SET idUsuario= ?, idCiudad=?,dayReserva=?,dayLlegada=?,flagAnulado=?,dayVencimiento=? WHERE idReserva = ?");
             pst2.setInt(1, reserva.getUsuario().getIdUsuario());
             pst2.setInt(2, reserva.getCiudad().getIdCiudad());
             pst2.setDate(3, (Date) reserva.getDayReserva());
@@ -222,5 +222,25 @@ public class ReservaDAO {
             System.err.println("Error al validar usuario " + e);
         }
         return Id;
+    }
+    public Factura BuscarFactura(Reserva reserva){
+        int Id = 0;
+        Factura factura = new Factura();
+        try {
+             Connection cn = Conexion.conectar();
+                PreparedStatement pst = cn.prepareStatement(
+                        "select idFactura from factura where idReserva= '" + reserva.getIdReserva() + "'");
+                ResultSet rs = pst.executeQuery();
+                if (rs.next()){
+                    Id = rs.getInt("idFactura");
+                    FacturaDAO modelFactura = new FacturaDAO();
+                    factura.setIdFactura(Id);
+                    modelFactura.buscar(factura);
+                }
+                cn.close();  
+        } catch (SQLException e) {
+            System.err.println("Error al validar usuario " + e);
+        }
+        return factura;
     }
 }

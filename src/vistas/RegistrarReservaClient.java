@@ -1,15 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package vistas;
 
 import java.awt.Color;
+import static java.lang.Math.random;
+import static java.lang.StrictMath.random;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
@@ -17,30 +15,33 @@ import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 import model.Ciudad;
 import model.CiudadDAO;
+import model.Factura;
+import model.FacturaDAO;
+import model.Pedido;
 import model.Reserva;
 import model.ReservaDAO;
 import model.Usuario;
 import model.UsuarioDAO;
+import java.util.Random;
 
-/**
- *
- * @author ANDERSON
- */
 public class RegistrarReservaClient extends javax.swing.JFrame {
 
     String user;
     ReservaDAO modelReserva = new ReservaDAO();
+    int Id;
+    Reserva reserva = null;
+
     public RegistrarReservaClient() {
         initComponents();
         setResizable(false);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        
         user = LoginFrame.user;
         lblId.setText(modelReserva.idIncrementable());
         DefaultComboBoxModel modeloCiudad = new DefaultComboBoxModel(modelReserva.mostraCiudad());
         cbxCiudad.setModel(modeloCiudad);
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -178,10 +179,9 @@ public class RegistrarReservaClient extends javax.swing.JFrame {
     private void cbxCiudadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxCiudadActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cbxCiudadActionPerformed
-
     private void ButtonRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonRegistrarActionPerformed
-        
-        int Id = Integer.parseInt(lblId.getText());
+
+        Id = Integer.parseInt(lblId.getText());
         int validar = 0;
         if (cbxCiudad.getSelectedItem().toString().equals("Seleccione una Ciudad")) {
             cbxCiudad.setBackground(Color.red);
@@ -204,18 +204,17 @@ public class RegistrarReservaClient extends javax.swing.JFrame {
             ciudad.setIdCiudad(modelReserva.GetIdCiudad(nombreCiudad));
             CiudadDAO modelCiudad = new CiudadDAO();
             modelCiudad.buscarCiudad(ciudad);
-            
-            
+
             Date dayReserva = jdcFechaReserva.getDate();
             long dateReserva = dayReserva.getTime();
             java.sql.Date fechaReserv = new java.sql.Date(dateReserva);
-            
+
             String flagAnulado = "No";
-            
+
             String fechaLlegada = new SimpleDateFormat("yyyyy-MM-dd").format(dayReserva);
-            String [] f = fechaLlegada.split("-");
+            String[] f = fechaLlegada.split("-");
             Calendar calendar = Calendar.getInstance();
-            calendar.set(Integer.parseInt(f[0]), Integer.parseInt(f[1])-1, Integer.parseInt(f[2]));
+            calendar.set(Integer.parseInt(f[0]), Integer.parseInt(f[1]) - 1, Integer.parseInt(f[2]));
             calendar.add(Calendar.DAY_OF_MONTH, 5);
             SimpleDateFormat fe = new SimpleDateFormat("yyyyy-MM-dd");
             String xfechallegada = fe.format(calendar.getTime());
@@ -226,12 +225,11 @@ public class RegistrarReservaClient extends javax.swing.JFrame {
             } catch (ParseException ex) {
                 Logger.getLogger(RegistrarReservaClient.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
-            
+
             String fechaVencimiento = new SimpleDateFormat("yyyyy-MM-dd").format(dayReserva);
-            String [] fec = fechaVencimiento.split("-");
+            String[] fec = fechaVencimiento.split("-");
             Calendar calendar2 = Calendar.getInstance();
-            calendar2.set(Integer.parseInt(fec[0]), Integer.parseInt(fec[1])-1, Integer.parseInt(fec[2]));
+            calendar2.set(Integer.parseInt(fec[0]), Integer.parseInt(fec[1]) - 1, Integer.parseInt(fec[2]));
             calendar2.add(Calendar.DAY_OF_MONTH, 30);
             SimpleDateFormat fecha = new SimpleDateFormat("yyyyy-MM-dd");
             String xfechavencimiento = fecha.format(calendar2.getTime());
@@ -242,19 +240,56 @@ public class RegistrarReservaClient extends javax.swing.JFrame {
             } catch (ParseException ex) {
                 Logger.getLogger(RegistrarReservaClient.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
-            
-            
-            Reserva reserva = new Reserva(Id, ciudad, usuario, fechaReserv, dateLlegada, flagAnulado, dateVencimiento);
-            
+            reserva = new Reserva(Id, ciudad, usuario, fechaReserv, dateLlegada, flagAnulado, dateVencimiento);
+
             if (modelReserva.insertar(reserva)) {
                 JOptionPane.showMessageDialog(null, "Registro exitoso. ");
+                GenerarFactura();
                 dispose();
             } else {
                 JOptionPane.showMessageDialog(null, "Reserva ya fue registrado.");
             }
         }
     }//GEN-LAST:event_ButtonRegistrarActionPerformed
+    public void GenerarFactura() {
+        Factura factura = new Factura();
+        FacturaDAO modelFactura = new FacturaDAO();
+        factura.setIdFactura(Integer.parseInt(modelFactura.idIncrementable()));
+        double monto = 0;
+        Vector<Pedido> pedidos = modelFactura.PedidosTotal(user, String.valueOf(reserva.getIdReserva()));
+        for (int i = 0; i < pedidos.size(); ++i) {
+            monto = monto + (pedidos.get(i).getQuantityPeso() * pedidos.get(i).getMoneyPrecio());
+        }
+        factura.setMoneyPrecioFinal(monto);
+        Random random = new Random();
+        String cad = "0";
+        for (int i = 0; i < 3; ++i) {
+            cad = cad + random.nextInt((9 + 1) - 0);
+        }
+        Random random2 = new Random();
+        String cad2 = "1";
+        for (int i = 0; i < 3; ++i) {
+            cad2 = cad2 + random2.nextInt((9 + 1) - 0);
+        }
+        factura.setReserva(reserva);
+        factura.setNumSerie("F" + random.nextInt((10 + 1) - 0) + cad);
+        factura.setNumFactura(cad2 + random2.nextInt((10 + 1) - 0));
+        factura.setFlagCancelado("No");
+        SimpleDateFormat date = new SimpleDateFormat("yyyy/MM/dd");
+        String fecha = new SimpleDateFormat("yyyy/MM/dd").format(Calendar.getInstance().getTime());
+        Date fechaFac = null;
+        try {
+
+            fechaFac = date.parse(fecha);
+
+        } catch (ParseException ex) {
+
+            ex.printStackTrace();
+
+        }
+        factura.setDayFactura(fechaFac);
+        modelFactura.insertar(factura);
+    }
 
     /**
      * @param args the command line arguments

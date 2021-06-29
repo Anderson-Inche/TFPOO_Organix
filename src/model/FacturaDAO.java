@@ -10,14 +10,13 @@ public class FacturaDAO {
         try {
             Connection cn2 = Conexion.conectar();
             PreparedStatement pst2 = cn2.prepareStatement(
-                    "insert  into factura values (?,?,?,?,?,?,?)");
+                    "insert  into factura values (?,?,?,?,?,?,NOW())");
             pst2.setInt(1, 0);
             pst2.setInt(2, factura.getReserva().getIdReserva());
             pst2.setDouble(3, factura.getMoneyPrecioFinal());
             pst2.setString(4, factura.getNumFactura());
             pst2.setString(5, factura.getNumSerie());
             pst2.setString(6, factura.getFlagCancelado());
-            pst2.setDate(7, (Date) factura.getDayFactura());
             
             pst2.executeUpdate();
             cn2.close();
@@ -93,6 +92,24 @@ public class FacturaDAO {
             return false;
         }
     }
+    
+    public int buscarFacturaReserva(String idReserva){
+        int idFactura = 0;
+        try {
+            Connection cn = Conexion.conectar();
+            PreparedStatement pst = cn.prepareStatement(
+                    "select * from factura where idReserva = '" + idReserva + "'");
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                idFactura = rs.getInt("idFactura");
+            }
+            cn.close();                      
+        } catch (SQLException e) {
+            System.err.println("Error al validar usuario " + e);
+        }
+        return idFactura;
+    }
+    
     public String idIncrementable() {
         try {
             Connection cn = Conexion.conectar();
@@ -112,15 +129,16 @@ public class FacturaDAO {
             return "";
         }
     }
-    public  Vector<Reserva> mostrarReserva(){
-        
+    
+    public  Vector<Reserva> mostrarReserva(String user){
+       
         PreparedStatement ps = null;
         ResultSet rs = null;
         Connection cn = Conexion.conectar();
         Vector<Reserva> datos = new Vector<Reserva>();
         Reserva dat= null;
         try{
-            String sql = "SELECT * FROM reserva";
+            String sql = "SELECT * FROM reserva join usuario on reserva.idUsuario = usuario.idUsuario where usuario.nombreUsuario = '"+user+"'";
             ps = cn.prepareStatement(sql);
             rs = ps.executeQuery();
 
@@ -131,6 +149,52 @@ public class FacturaDAO {
                 datos.add(dat);
             }
             
+        }catch(SQLException ex){
+             System.err.println("Error al validar País " + ex);
+        }
+        return datos;
+    }
+    public  Vector<Reserva> mostrarReserva(){
+       
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        Connection cn = Conexion.conectar();
+        Vector<Reserva> datos = new Vector<Reserva>();
+        Reserva dat= null;
+        try{
+            String sql = "SELECT * FROM reserva ";
+            ps = cn.prepareStatement(sql);
+            rs = ps.executeQuery();
+
+            while(rs.next()){
+                dat = new Reserva();
+                
+                dat.setIdReserva(rs.getInt("idReserva"));
+                datos.add(dat);
+            }
+            
+        }catch(SQLException ex){
+             System.err.println("Error al validar País " + ex);
+        }
+        return datos;
+    }
+    public Vector<Pedido> PedidosTotal(String user,String idReserva){
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        Connection cn = Conexion.conectar();
+        Vector<Pedido> datos = new Vector<Pedido>();
+        Pedido dat= null;
+        
+        try{
+            String sql = "SELECT pedido.idPedido,pedido.idReserva, producto.nameProducto, pedido.quantityPedido, pedido.moneyPrecio FROM pedido join producto on pedido.idProducto =producto.idProducto join reserva on pedido.idReserva=reserva.idReserva join usuario on reserva.idUsuario = usuario.idUsuario WHERE usuario.nombreUsuario = '" + user + "' and pedido.idReserva = '"+idReserva+"'";
+            ps = cn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                dat = new Pedido();
+                dat.setMoneyPrecio(rs.getDouble("moneyPrecio"));
+                dat.setQuantityPeso(rs.getDouble("quantityPedido"));
+                datos.add(dat);
+            }
         }catch(SQLException ex){
              System.err.println("Error al validar País " + ex);
         }

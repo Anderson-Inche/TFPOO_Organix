@@ -4,19 +4,21 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/ANDERSON/Desktop/CICLO4/PROG.OBJETO/TF/TF_Organix/src/model/Producto.java</file>
-            <file>file:/C:/Users/ANDERSON/Desktop/CICLO4/PROG.OBJETO/TF/TF_Organix/src/vistas/RegistrarReserva.java</file>
-            <file>file:/C:/Users/ANDERSON/Desktop/CICLO4/PROG.OBJETO/TF/TF_Organix/src/controlador/ControlUsuario.java</file>
-            <file>file:/C:/Users/ANDERSON/Desktop/CICLO4/PROG.OBJETO/TF/TF_Organix/src/vistas/RegistrarReservaClient.java</file>
+            <file>file:/C:/Users/ANDERSON/Desktop/CICLO4/PROG.OBJETO/TF/TF_Organix/src/model/Conexion.java</file>
+            <file>file:/C:/Users/ANDERSON/Desktop/CICLO4/PROG.OBJETO/TF/TF_Organix/src/model/CiudadDAO.java</file>
+            <file>file:/C:/Users/ANDERSON/Desktop/CICLO4/PROG.OBJETO/TF/TF_Organix/src/model/PaisDAO.java</file>
             <file>file:/C:/Users/ANDERSON/Desktop/CICLO4/PROG.OBJETO/TF/TF_Organix/src/model/UsuarioDAO.java</file>
+            <file>file:/C:/Users/ANDERSON/Desktop/CICLO4/PROG.OBJETO/TF/TF_Organix/src/vistas/BuscarReservaCliente.java</file>
+            <file>file:/C:/Users/ANDERSON/Desktop/CICLO4/PROG.OBJETO/TF/TF_Organix/src/vistas/BuscarFacturaCliente.java</file>
             <file>file:/C:/Users/ANDERSON/Desktop/CICLO4/PROG.OBJETO/TF/TF_Organix/src/model/PedidoDAO.java</file>
-            <file>file:/C:/Users/ANDERSON/Desktop/CICLO4/PROG.OBJETO/TF/TF_Organix/src/vistas/PanelReserva.java</file>
-            <file>file:/C:/Users/ANDERSON/Desktop/CICLO4/PROG.OBJETO/TF/TF_Organix/src/controlador/ControlReserva.java</file>
+            <file>file:/C:/Users/ANDERSON/Desktop/CICLO4/PROG.OBJETO/TF/TF_Organix/src/vistas/RegistrarPedido.java</file>
+            <file>file:/C:/Users/ANDERSON/Desktop/CICLO4/PROG.OBJETO/TF/TF_Organix/src/vistas/RegistrarProducto.java</file>
+            <file>file:/C:/Users/ANDERSON/Desktop/CICLO4/PROG.OBJETO/TF/TF_Organix/src/controlador/ControlProducto.java</file>
             <file>file:/C:/Users/ANDERSON/Desktop/CICLO4/PROG.OBJETO/TF/TF_Organix/src/model/ProductoDAO.java</file>
-            <file>file:/C:/Users/ANDERSON/Desktop/CICLO4/PROG.OBJETO/TF/TF_Organix/src/vistas/PanelReservaCliente.java</file>
-            <file>file:/C:/Users/ANDERSON/Desktop/CICLO4/PROG.OBJETO/TF/TF_Organix/src/vistas/Cliente.java</file>
+            <file>file:/C:/Users/ANDERSON/Desktop/CICLO4/PROG.OBJETO/TF/TF_Organix/src/vistas/Pagar.java</file>
+            <file>file:/C:/Users/ANDERSON/Desktop/CICLO4/PROG.OBJETO/TF/TF_Organix/src/model/FacturaDAO.java</file>
             <file>file:/C:/Users/ANDERSON/Desktop/CICLO4/PROG.OBJETO/TF/TF_Organix/src/model/ReservaDAO.java</file>
-            <file>file:/C:/Users/ANDERSON/Desktop/CICLO4/PROG.OBJETO/TF/TF_Organix/src/vistas/PanelUsuario.java</file>
-            <file>file:/C:/Users/ANDERSON/Desktop/CICLO4/PROG.OBJETO/TF/TF_Organix/src/vistas/PanelProductosCliente.java</file>
+            <file>file:/C:/Users/ANDERSON/Desktop/CICLO4/PROG.OBJETO/TF/TF_Organix/src/vistas/PanelFactura.java</file>
         </group>
     </open-files>
 </project-private>

@@ -32,8 +32,8 @@ public class ProductoDAO {
             pst2.setInt(1, producto.getIdProducto());
             pst2.setString(2, producto.getNombreProducto());
             pst2.setDate(3, (Date) producto.getDiaReabastecimiento());
-            pst2.setInt(4, producto.getStock());
-            pst2.setInt(5, producto.getCantidadReservada());
+            pst2.setDouble(4, producto.getStock());
+            pst2.setDouble(5, producto.getCantidadReservada());
             pst2.setDouble(6, producto.getPrecio());
             pst2.executeUpdate();
             cn2.close();
@@ -54,8 +54,8 @@ public class ProductoDAO {
             
             pst2.setString(1, producto.getNombreProducto());
             pst2.setDate(2, (Date) producto.getDiaReabastecimiento());
-            pst2.setInt(3, producto.getStock());
-            pst2.setInt(4, producto.getCantidadReservada());
+            pst2.setDouble(3, producto.getStock());
+            pst2.setDouble(4, producto.getCantidadReservada());
             pst2.setDouble(5, producto.getPrecio());
             pst2.setInt(6, producto.getIdProducto());
             

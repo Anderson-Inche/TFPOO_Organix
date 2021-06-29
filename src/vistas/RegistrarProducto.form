@@ -50,7 +50,7 @@
                   <EmptySpace min="-2" pref="318" max="-2" attributes="0"/>
               </Group>
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="246" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="128" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
                       <Group type="103" alignment="0" groupAlignment="1" attributes="0">
@@ -237,7 +237,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Roboto" size="14" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Stock disponible:"/>
+            <Property name="text" type="java.lang.String" value="Stock disponible (T):"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtStockDisponible">
@@ -255,7 +255,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Roboto" size="14" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Cantidad Reservada:"/>
+            <Property name="text" type="java.lang.String" value="Cantidad Reservada (T):"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtStockReservada">
@@ -273,7 +273,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Roboto" size="14" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Precio:"/>
+            <Property name="text" type="java.lang.String" value="Precio ($):"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtPrecio">

@@ -11,7 +11,6 @@ public class Ciudad {
         this.pais = pais;
     }
     public Ciudad() {
-        
     }
     public int getIdCiudad() {
         return idCiudad;
@@ -40,5 +39,4 @@ public class Ciudad {
     public String toString(){
         return this.nombreCiudad;
     }
-
 }

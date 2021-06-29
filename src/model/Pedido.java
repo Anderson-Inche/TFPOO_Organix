@@ -1,20 +1,21 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package model;
 public class Pedido {
     private int idPedido;
     private Reserva reserva;
     private Producto producto;
     private double quantityPeso;
+    private double moneyPrecio;
 
-    public Pedido(int idPedido, Reserva reserva, Producto producto, double quantityPeso) {
+    public Pedido(int idPedido, Reserva reserva, Producto producto, double quantityPeso, double moneyPrecio) {
         this.idPedido = idPedido;
         this.reserva = reserva;
         this.producto = producto;
         this.quantityPeso = quantityPeso;
+        this.moneyPrecio = moneyPrecio;
+    }
+
+    public Pedido() {
+        
     }
 
     public int getIdPedido() {
@@ -47,5 +48,13 @@ public class Pedido {
 
     public void setQuantityPeso(double quantityPeso) {
         this.quantityPeso = quantityPeso;
+    }
+
+    public double getMoneyPrecio() {
+        return moneyPrecio;
+    }
+
+    public void setMoneyPrecio(double moneyPrecio) {
+        this.moneyPrecio = moneyPrecio;
     }
 }

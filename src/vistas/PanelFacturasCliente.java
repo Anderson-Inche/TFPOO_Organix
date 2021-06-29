@@ -5,17 +5,29 @@
  */
 package vistas;
 
+import java.awt.Color;
+import java.awt.event.KeyEvent;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import model.Conexion;
+import model.Factura;
+import model.FacturaDAO;
 /**
  *
  * @author ANDERSON
  */
 public class PanelFacturasCliente extends javax.swing.JPanel {
 
-    /**
-     * Creates new form PanelFacturasCliente
-     */
+    String user;
     public PanelFacturasCliente() {
         initComponents();
+        user = LoginFrame.user;
+        MostrarTabla();
     }
 
     /**
@@ -29,7 +41,6 @@ public class PanelFacturasCliente extends javax.swing.JPanel {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        ButtonRegistrar = new javax.swing.JButton();
         buttonBuscar = new javax.swing.JButton();
         txtBuscar = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
@@ -38,18 +49,6 @@ public class PanelFacturasCliente extends javax.swing.JPanel {
         actualizar = new javax.swing.JButton();
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
-
-        ButtonRegistrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons/Boton-Pagar.png"))); // NOI18N
-        ButtonRegistrar.setBorder(null);
-        ButtonRegistrar.setBorderPainted(false);
-        ButtonRegistrar.setContentAreaFilled(false);
-        ButtonRegistrar.setFocusPainted(false);
-        ButtonRegistrar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons/BotonPress-Pagar.png"))); // NOI18N
-        ButtonRegistrar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ButtonRegistrarActionPerformed(evt);
-            }
-        });
 
         buttonBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons/search-icon.png"))); // NOI18N
         buttonBuscar.setBorderPainted(false);
@@ -76,10 +75,7 @@ public class PanelFacturasCliente extends javax.swing.JPanel {
 
         jTablePaises.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+
             },
             new String [] {
                 "CÓDIGO", "RESERVA", "NÚMERO DED FACTURA", "NÚMERO DE SERIE", "CANCELADO", "FECHA DE EMISIÓN", "MONTO (S/.)"
@@ -113,8 +109,7 @@ public class PanelFacturasCliente extends javax.swing.JPanel {
                 .addGap(89, 89, 89)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(ButtonRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 662, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(buttonBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -132,17 +127,16 @@ public class PanelFacturasCliente extends javax.swing.JPanel {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(51, 51, 51)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(buttonBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(ButtonRegistrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(buttonBuscar)
                     .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(21, 21, 21)
                 .addComponent(actualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(436, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 599, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(67, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -188,36 +182,82 @@ public class PanelFacturasCliente extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void ButtonRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonRegistrarActionPerformed
-        // TODO add your handling code here:
-        RegistrarPais registrarPais = new RegistrarPais();
-        registrarPais.setVisible(true);
-        //        ControlPais controlPais = new ControlPais(registrarPais);
-    }//GEN-LAST:event_ButtonRegistrarActionPerformed
-
     private void buttonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBuscarActionPerformed
-        // TODO add your handling code here:
-        //        BuscarPais();
+        Buscar();
     }//GEN-LAST:event_buttonBuscarActionPerformed
-
     private void txtBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyPressed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtBuscarKeyPressed
-
     private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
-        // TODO add your handling code here:
-        // if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            // BuscarPais();
-            //  }
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            Buscar();
+        }
     }//GEN-LAST:event_txtBuscarKeyReleased
-
     private void actualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actualizarActionPerformed
-        // MostrarTabla();
+        MostrarTabla();
     }//GEN-LAST:event_actualizarActionPerformed
+    void MostrarTabla(){
+        try {
+            DefaultTableModel modelo = new DefaultTableModel();
+            jTablePaises.setModel(modelo);
+            Connection cn = Conexion.conectar();
+            PreparedStatement pst = cn.prepareStatement(
+                    "SELECT factura.idFactura, factura.idReserva , factura.numFactura, factura.numSerie, factura.flagCancelado,factura.dayFactura,factura.moneyPrecioFinal FROM factura join reserva on factura.idReserva = reserva.idReserva  join usuario on usuario.idUsuario = reserva.idUsuario where usuario.nombreUsuario = '"+ user+"'");
 
+            ResultSet result = pst.executeQuery();
+
+            ResultSetMetaData rsMd = result.getMetaData();
+            int cantidadColumns = rsMd.getColumnCount();
+
+            modelo.addColumn("CÓDIGO");
+            modelo.addColumn("RESERVA");
+            modelo.addColumn("NÚMERO FACTURA");
+            modelo.addColumn("NÚMERO SERIE");
+            modelo.addColumn("CANCELADO");
+            modelo.addColumn("FECHA DE EMISIÓN");
+            modelo.addColumn("MONTO TOTAL ($)");
+            
+            while (result.next()) {
+                Object[] filas = new Object[cantidadColumns];
+                for (int i = 0; i < cantidadColumns; i++) {
+                    filas[i] = result.getObject(i + 1);
+                }
+                modelo.addRow(filas);
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex.toString());
+        }
+    }
+    public void Buscar(){
+        int validacion = 0;
+            FacturaDAO modelFac = new FacturaDAO();
+            if (txtBuscar.getText().equals("")) {
+                txtBuscar.setBackground(Color.red);
+                validacion++;
+            }
+            if (validacion == 0) {
+                int codCiudadBuscar = Integer.parseInt(txtBuscar.getText());
+                Factura factura = new Factura();
+                factura.setIdFactura(codCiudadBuscar);
+                if (modelFac.buscar(factura)) {
+                    
+                    BuscarFacturaCliente buscarFactura = new BuscarFacturaCliente();
+                    buscarFactura.setVisible(true);
+                    buscarFactura.lableCodigo.setText(String.valueOf(factura.getIdFactura()));
+                    buscarFactura.lblFecha.setText(factura.getDayFactura().toString());
+                    buscarFactura.lblMonto.setText(String.valueOf(factura.getMoneyPrecioFinal()));
+                    buscarFactura.lblNumFac.setText(factura.getNumFactura());
+                    buscarFactura.lblNumSerie.setText(factura.getNumSerie());
+                    buscarFactura.lblReserva.setText(String.valueOf(factura.getReserva().getIdReserva()));
+                } else {
+                    JOptionPane.showMessageDialog(null, "Factura no registrada");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Debe ingresar el Id de la FACTURA a buscar");
+            }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton ButtonRegistrar;
     private javax.swing.JButton actualizar;
     public javax.swing.JButton buttonBuscar;
     private javax.swing.JPanel jPanel1;

@@ -40,47 +40,47 @@ public class Cliente extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(108, 188, 172));
 
-        jLabel1.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
         jLabel1.setText("CLIENTE");
 
-        ButtonReserva.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons/Boton-bar-reservas.png"))); // NOI18N
+        ButtonReserva.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons/Boton-Reservas.png"))); // NOI18N
         ButtonReserva.setBorder(null);
         ButtonReserva.setContentAreaFilled(false);
         ButtonReserva.setFocusPainted(false);
-        ButtonReserva.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons/BotonPress-bar-reservas.png"))); // NOI18N
+        ButtonReserva.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons/Press-Reserva.png"))); // NOI18N
         ButtonReserva.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ButtonReservaActionPerformed(evt);
             }
         });
 
-        ButtonFactura.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons/Boton-bar-facturas.png"))); // NOI18N
+        ButtonFactura.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons/Boton-Facturas.png"))); // NOI18N
         ButtonFactura.setBorder(null);
         ButtonFactura.setContentAreaFilled(false);
         ButtonFactura.setFocusPainted(false);
-        ButtonFactura.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons/BotonPress-bar-facturas.png"))); // NOI18N
+        ButtonFactura.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons/Press-Facturas.png"))); // NOI18N
         ButtonFactura.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ButtonFacturaActionPerformed(evt);
             }
         });
 
-        ButtonProductos2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons/Boton-bar-Pedidos.png"))); // NOI18N
+        ButtonProductos2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons/Boton-Pedidos.png"))); // NOI18N
         ButtonProductos2.setBorder(null);
         ButtonProductos2.setContentAreaFilled(false);
         ButtonProductos2.setFocusPainted(false);
-        ButtonProductos2.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons/Boton-Press-Pedidos.png"))); // NOI18N
+        ButtonProductos2.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons/Press-Pedidos.png"))); // NOI18N
         ButtonProductos2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ButtonProductos2ActionPerformed(evt);
             }
         });
 
-        ButtonProductos3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons/Boton-bar-Productos.png"))); // NOI18N
+        ButtonProductos3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons/Boton-Productos.png"))); // NOI18N
         ButtonProductos3.setBorder(null);
         ButtonProductos3.setContentAreaFilled(false);
         ButtonProductos3.setFocusPainted(false);
-        ButtonProductos3.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons/BotonPress-bar-productos.png"))); // NOI18N
+        ButtonProductos3.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons/Press-Productos.png"))); // NOI18N
         ButtonProductos3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ButtonProductos3ActionPerformed(evt);
@@ -139,7 +139,7 @@ public class Cliente extends javax.swing.JFrame {
 
         PanelHeader.setBackground(new java.awt.Color(33, 45, 62));
 
-        lbTitulo.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        lbTitulo.setFont(new java.awt.Font("Roboto", 0, 24)); // NOI18N
         lbTitulo.setForeground(new java.awt.Color(255, 255, 255));
         lbTitulo.setText("Principal");
 
@@ -170,6 +170,7 @@ public class Cliente extends javax.swing.JFrame {
 
     private void ButtonReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonReservaActionPerformed
         // TODO add your handling code here:
+        PanelMain.removeAll();
         lbTitulo.setText("Reservas");
         PanelReservaCliente panelReserva= new PanelReservaCliente();
         PanelMain.add(panelReserva);
@@ -177,6 +178,7 @@ public class Cliente extends javax.swing.JFrame {
 
     private void ButtonFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonFacturaActionPerformed
         // TODO add your handling code here:
+        PanelMain.removeAll();
         lbTitulo.setText("Facturas");
         PanelFacturasCliente panelFactura= new PanelFacturasCliente();
         PanelMain.add(panelFactura);
@@ -184,12 +186,14 @@ public class Cliente extends javax.swing.JFrame {
 
     private void ButtonProductos2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonProductos2ActionPerformed
         // TODO add your handling code here:
+        PanelMain.removeAll();
         lbTitulo.setText("Pedidos");
         PanelPedidosCliente panelPedidos = new PanelPedidosCliente();
         PanelMain.add(panelPedidos);
     }//GEN-LAST:event_ButtonProductos2ActionPerformed
 
     private void ButtonProductos3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonProductos3ActionPerformed
+        PanelMain.removeAll();
         lbTitulo.setText("Producto");
         PanelProductosCliente panelProducto = new PanelProductosCliente();
         PanelMain.add(panelProducto);
@@ -198,9 +202,10 @@ public class Cliente extends javax.swing.JFrame {
 
     private void ButtonFactura1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonFactura1ActionPerformed
         // TODO add your handling code here:
+        PanelMain.removeAll();
         lbTitulo.setText("Contacto");
         PanelContacto panelContacto = new PanelContacto();
-         PanelMain.add(panelContacto);
+        PanelMain.add(panelContacto);
     }//GEN-LAST:event_ButtonFactura1ActionPerformed
 
     /**

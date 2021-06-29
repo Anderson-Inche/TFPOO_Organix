@@ -105,17 +105,17 @@ public class RegistrarProducto extends javax.swing.JFrame {
         jLabel4.setText("Día de reabastecimiento:");
 
         jLabel5.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jLabel5.setText("Stock disponible:");
+        jLabel5.setText("Stock disponible (T):");
 
         txtStockDisponible.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
 
         jLabel6.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jLabel6.setText("Cantidad Reservada:");
+        jLabel6.setText("Cantidad Reservada (T):");
 
         txtStockReservada.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
 
         jLabel7.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jLabel7.setText("Precio:");
+        jLabel7.setText("Precio ($):");
 
         txtPrecio.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
 
@@ -131,7 +131,7 @@ public class RegistrarProducto extends javax.swing.JFrame {
                 .addComponent(ButtonRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(318, 318, 318))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(246, 246, 246)
+                .addGap(128, 128, 128)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)

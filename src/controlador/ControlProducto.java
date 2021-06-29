@@ -67,8 +67,8 @@ public class ControlProducto implements ActionListener {
                 Date dayReabastecimiento = registrarProductofrm.jdcDiaReabastecimiento.getDate();
                 long date = dayReabastecimiento.getTime();
                 java.sql.Date fecha = new java.sql.Date(date);
-                int stockDisponible = Integer.parseInt(registrarProductofrm.txtStockDisponible.getText());
-                int stockReservado = Integer.parseInt(registrarProductofrm.txtStockReservada.getText());
+                double stockDisponible = Integer.parseInt(registrarProductofrm.txtStockDisponible.getText());
+                double stockReservado = Integer.parseInt(registrarProductofrm.txtStockReservada.getText());
                 
                 Producto producto = new Producto(id, nombre, fecha, stockDisponible, stockReservado, precio);
                 if (modeloProducto.validarProducto(nombre)){
